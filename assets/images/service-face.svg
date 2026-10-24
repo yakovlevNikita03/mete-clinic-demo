@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="faceBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F5EDE4"/>
+      <stop offset="0.55" stop-color="#EADCCE"/>
+      <stop offset="1" stop-color="#DAC8B9"/>
+    </linearGradient>
+    <radialGradient id="faceGlow" cx="0.45" cy="0.4" r="0.55">
+      <stop offset="0" stop-color="#FFFCF7" stop-opacity="0.9"/>
+      <stop offset="1" stop-color="#FFFCF7" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="faceBlur" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="16"/>
+    </filter>
+    <filter id="faceGrain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.05"/></feComponentTransfer>
+    </filter>
+  </defs>
+  <rect width="800" height="600" fill="url(#faceBg)"/>
+  <rect width="800" height="600" fill="url(#faceGlow)"/>
+  <ellipse cx="560" cy="430" rx="260" ry="180" fill="#1A4228" opacity="0.05" filter="url(#faceBlur)"/>
+  <g fill="none" stroke="#1A4228" stroke-opacity="0.22">
+    <ellipse cx="400" cy="300" rx="230" ry="180" stroke-width="1.4"/>
+    <ellipse cx="400" cy="300" rx="180" ry="140" stroke-width="1.2"/>
+    <ellipse cx="400" cy="300" rx="128" ry="100" stroke-width="1.2"/>
+    <ellipse cx="400" cy="300" rx="76" ry="60" stroke-width="1.2"/>
+  </g>
+  <path d="M292 388 C 336 356, 356 300, 356 250 C 356 206, 386 176, 424 180" fill="none" stroke="#1A4228" stroke-opacity="0.28" stroke-width="1.8" stroke-linecap="round"/>
+  <g fill="#FFFFFF" opacity="0.6">
+    <circle cx="300" cy="196" r="9"/>
+    <circle cx="268" cy="238" r="5"/>
+    <circle cx="322" cy="160" r="4"/>
+  </g>
+  <g fill="none" stroke="#FFFFFF" stroke-opacity="0.5" stroke-width="1">
+    <path d="M120 470 C 240 440, 330 470, 420 520"/>
+    <path d="M470 96 C 560 78, 640 100, 700 146"/>
+  </g>
+  <rect width="800" height="600" filter="url(#faceGrain)" opacity="0.7" style="mix-blend-mode:multiply"/>
+</svg>

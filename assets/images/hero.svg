@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1240" width="1000" height="1240" role="img" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="heroBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F4ECE3"/>
+      <stop offset="0.5" stop-color="#E6D7C9"/>
+      <stop offset="1" stop-color="#D2BFB0"/>
+    </linearGradient>
+    <radialGradient id="heroGlow" cx="0.32" cy="0.18" r="0.72">
+      <stop offset="0" stop-color="#FFFCF6" stop-opacity="0.95"/>
+      <stop offset="1" stop-color="#FFFCF6" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="silk" x1="0" y1="0" x2="1" y2="0.6">
+      <stop offset="0" stop-color="#FFFDF9" stop-opacity="0.62"/>
+      <stop offset="0.55" stop-color="#F0E4D7" stop-opacity="0.12"/>
+      <stop offset="1" stop-color="#B9A18D" stop-opacity="0.22"/>
+    </linearGradient>
+    <linearGradient id="greenVeil" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1A4228" stop-opacity="0"/>
+      <stop offset="1" stop-color="#1A4228" stop-opacity="0.16"/>
+    </linearGradient>
+    <filter id="blurL" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="26"/>
+    </filter>
+    <filter id="blurS" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="8"/>
+    </filter>
+    <filter id="heroGrain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.055"/>
+      </feComponentTransfer>
+    </filter>
+  </defs>
+
+  <rect width="1000" height="1240" fill="url(#heroBg)"/>
+  <rect width="1000" height="1240" fill="url(#heroGlow)"/>
+
+  <g filter="url(#blurL)">
+    <ellipse cx="780" cy="880" rx="470" ry="330" transform="rotate(-22 780 880)" fill="url(#silk)" opacity="0.9"/>
+    <ellipse cx="250" cy="1050" rx="380" ry="260" transform="rotate(18 250 1050)" fill="#F6EDE2" opacity="0.55"/>
+    <ellipse cx="880" cy="180" rx="320" ry="240" transform="rotate(30 880 180)" fill="#FFF8EE" opacity="0.5"/>
+  </g>
+
+  <g filter="url(#blurS)" opacity="0.5">
+    <path d="M-60 980 C 180 820, 420 1080, 700 900 C 860 800, 960 830, 1060 900 L 1060 1260 L -60 1260 Z" fill="url(#greenVeil)"/>
+  </g>
+
+  <g fill="none" stroke="#FBF7F1" stroke-width="1.4" opacity="0.62">
+    <circle cx="722" cy="356" r="322"/>
+    <circle cx="722" cy="356" r="238" stroke-opacity="0.55"/>
+  </g>
+
+  <g fill="none" stroke="#1A4228" stroke-opacity="0.16" stroke-width="1.2">
+    <path d="M120 1200 V880 A 250 250 0 0 1 620 880 V1200"/>
+    <path d="M196 1200 V892 A 174 174 0 0 1 544 892 V1200"/>
+  </g>
+
+  <g fill="none" stroke="#1A4228" stroke-opacity="0.34" stroke-width="1.7" stroke-linecap="round">
+    <path d="M150 1130 C 220 1010, 262 912, 300 806 C 318 756, 330 712, 336 668"/>
+    <path d="M236 966 C 278 972, 320 962, 352 936"/>
+    <path d="M268 884 C 312 890, 352 878, 384 852"/>
+    <path d="M296 800 C 274 776, 258 748, 252 716"/>
+    <path d="M312 744 C 348 748, 382 736, 408 712"/>
+  </g>
+  <g fill="#1A4228" fill-opacity="0.2">
+    <ellipse cx="352" cy="930" rx="9" ry="25" transform="rotate(64 352 930)"/>
+    <ellipse cx="386" cy="846" rx="9" ry="24" transform="rotate(58 386 846)"/>
+    <ellipse cx="252" cy="708" rx="8" ry="22" transform="rotate(-24 252 708)"/>
+    <ellipse cx="414" cy="706" rx="8" ry="23" transform="rotate(52 414 706)"/>
+    <ellipse cx="332" cy="664" rx="7" ry="20" transform="rotate(8 332 664)"/>
+  </g>
+
+  <g opacity="0.5">
+    <path d="M470 1080 C 560 1000, 690 1010, 760 1090" fill="none" stroke="#1A4228" stroke-opacity="0.14" stroke-width="1.1"/>
+    <path d="M470 1108 C 570 1030, 690 1042, 770 1118" fill="none" stroke="#1A4228" stroke-opacity="0.1" stroke-width="1.1"/>
+  </g>
+
+  <rect width="1000" height="1240" filter="url(#heroGrain)" style="mix-blend-mode:multiply" opacity="0.75"/>
+</svg>
