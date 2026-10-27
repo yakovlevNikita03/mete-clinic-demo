@@ -1,13 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-hidden="true" focusable="false">
   <defs>
     <linearGradient id="bodyBg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#EFE6DB"/>
-      <stop offset="0.6" stop-color="#E2D3C4"/>
-      <stop offset="1" stop-color="#CDBAAB"/>
+      <stop offset="0" stop-color="#F6F2EB"/>
+      <stop offset="0.6" stop-color="#E7DCCF"/>
+      <stop offset="1" stop-color="#C9C1B8"/>
     </linearGradient>
     <linearGradient id="bodyVeil" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#1A4228" stop-opacity="0.12"/>
-      <stop offset="1" stop-color="#1A4228" stop-opacity="0"/>
+      <stop offset="0" stop-color="#0E4B3A" stop-opacity="0.12"/>
+      <stop offset="1" stop-color="#0E4B3A" stop-opacity="0"/>
     </linearGradient>
     <filter id="bodyBlur" x="-30%" y="-30%" width="160%" height="160%">
       <feGaussianBlur stdDeviation="18"/>
@@ -20,7 +20,7 @@
   </defs>
   <rect width="800" height="600" fill="url(#bodyBg)"/>
   <ellipse cx="220" cy="470" rx="300" ry="200" fill="url(#bodyVeil)" filter="url(#bodyBlur)"/>
-  <g fill="none" stroke="#1A4228" stroke-linecap="round">
+  <g fill="none" stroke="#0E4B3A" stroke-linecap="round">
     <path d="M80 420 C 230 330, 380 470, 530 386 C 620 336, 690 350, 760 390" stroke-opacity="0.26" stroke-width="1.8"/>
     <path d="M70 458 C 230 366, 388 506, 540 420 C 630 370, 700 382, 770 424" stroke-opacity="0.2" stroke-width="1.4"/>
     <path d="M64 496 C 232 404, 396 542, 550 456 C 640 406, 710 418, 780 460" stroke-opacity="0.14" stroke-width="1.2"/>
@@ -31,7 +31,7 @@
     <path d="M118 236 C 230 190, 330 206, 420 250"/>
     <circle cx="620" cy="192" r="58"/>
   </g>
-  <g fill="#1A4228" fill-opacity="0.18">
+  <g fill="#0E4B3A" fill-opacity="0.18">
     <circle cx="152" cy="180" r="6"/>
     <circle cx="188" cy="160" r="3.5"/>
     <circle cx="132" cy="150" r="3"/>

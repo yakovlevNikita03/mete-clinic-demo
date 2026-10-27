@@ -24,14 +24,24 @@ const SITE_CONFIG = {
   address: "ул. Фармана Салманова, 18, Тюмень",
   workingHours: "",
 
-  // Карта: только URL из официального кода встраивания (iframe src), не HTML
-  mapProvider: "yandex", // "yandex" | "2gis" | ""
-  // Официальный iframe-виджет. Координаты и POI — из карточки клиники;
-  // масштаб z=17 выставлен для обзорности (в исходном коде было z=20).
+  // Карта: только URL из официального кода встраивания (iframe src), не HTML.
+  // Активен виджет 2ГИС; Яндекс-вариант сохранён ниже в комментарии.
+  mapProvider: "2gis", // "yandex" | "2gis" | ""
   mapEmbedUrl:
-    "https://yandex.ru/map-widget/v1/?ll=65.499822%2C57.120144&mode=poi&poi%5Bpoint%5D=65.499677%2C57.120325&poi%5Buri%5D=ymapsbm1%3A%2F%2Forg%3Foid%3D51461565607&utm_source=share&z=17",
-  yandexMapsUrl: "https://yandex.ru/maps/org/mete_klinik/51461565607/",
+    "https://makemap.2gis.ru/widget?data=eJw1jsFuhDAMRP_FvUYrQkgg-YCtetvbSq32gMBtIwWMglfaLeLfa6D1yfKMZ94ClHvM2L8iDcg54gzhYwF-TggBztjyPSMomDJNmHnXF-goURb9pSgb_VmKzpHT9iFrj3OX48SRxuPw8zb2-ICgi_9ZFXwdhc8t7q_tQnFk8XckUHFseYdx9lR5b41Xtj7psjDG3OQ_9hC8K9ebgqGdLjTHo3CB1DKEw1vZxpamdrVTkDZVwmyhK-9qrxvjnRY6okHYnGQKN6V0_UZM7_uV8x3XX3SKWPg",
+  // Прямая ссылка на карточку 2ГИС пока не передана — ссылка будет скрыта.
   twoGisUrl: "",
+  // Яндекс-ссылка отключена вместе с картой, чтобы под 2ГИС не оставалась
+  // ссылка «Открыть в Яндекс Картах».
+  yandexMapsUrl: "",
+
+  /*
+   * Старая Яндекс Карта (сохранена, временно отключена).
+   * mapProvider: "yandex",
+   * mapEmbedUrl:
+   *   "https://yandex.ru/map-widget/v1/?ll=65.499822%2C57.120144&mode=poi&poi%5Bpoint%5D=65.499677%2C57.120325&poi%5Buri%5D=ymapsbm1%3A%2F%2Forg%3Foid%3D51461565607&utm_source=share&z=17",
+   * yandexMapsUrl: "https://yandex.ru/maps/org/mete_klinik/51461565607/",
+   */
 
   // Официальный виджет отзывов Яндекс Карт (iframe src) и ссылка на карточку
   reviewsEmbedUrl: "https://yandex.ru/maps-reviews-widget/51461565607?comments",

@@ -330,6 +330,10 @@
       ? "Карта: METE CLINIC, " + clean(config.address)
       : "Карта: METE CLINIC";
     mapIframe.setAttribute("allowfullscreen", "");
+    mapIframe.setAttribute(
+      "sandbox",
+      "allow-modals allow-forms allow-scripts allow-same-origin allow-popups allow-top-navigation-by-user-activation"
+    );
     mapIframe.setAttribute("referrerpolicy", "no-referrer-when-downgrade");
     mapFrame.appendChild(mapIframe);
     mapCard.hidden = false;

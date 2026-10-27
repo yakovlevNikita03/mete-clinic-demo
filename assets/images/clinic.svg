@@ -1,17 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900" role="img" aria-hidden="true" focusable="false">
   <defs>
     <linearGradient id="clinicBg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#F1E8DE"/>
-      <stop offset="0.55" stop-color="#E4D5C6"/>
-      <stop offset="1" stop-color="#D3BFB0"/>
+      <stop offset="0" stop-color="#F6F2EB"/>
+      <stop offset="0.55" stop-color="#E7DCCF"/>
+      <stop offset="1" stop-color="#C9C1B8"/>
     </linearGradient>
     <linearGradient id="archFill" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#FBF5EC"/>
-      <stop offset="1" stop-color="#E9DBCB"/>
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#F6F2EB"/>
     </linearGradient>
     <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#D8C6B6"/>
-      <stop offset="1" stop-color="#C7B2A1"/>
+      <stop offset="0" stop-color="#D9D9D7"/>
+      <stop offset="1" stop-color="#C9C1B8"/>
     </linearGradient>
     <filter id="clinicBlur" x="-30%" y="-30%" width="160%" height="160%">
       <feGaussianBlur stdDeviation="26"/>
@@ -23,28 +23,28 @@
     </filter>
   </defs>
   <rect width="1200" height="900" fill="url(#clinicBg)"/>
-  <ellipse cx="420" cy="180" rx="420" ry="280" fill="#FFFBF4" opacity="0.6" filter="url(#clinicBlur)"/>
+  <ellipse cx="420" cy="180" rx="420" ry="280" fill="#FFFFFF" opacity="0.6" filter="url(#clinicBlur)"/>
   <rect y="640" width="1200" height="260" fill="url(#floor)"/>
   <path d="M0 640 H1200" stroke="#FFFFFF" stroke-opacity="0.35" stroke-width="1.5"/>
 
   <g>
     <path d="M150 640 V 330 A 150 150 0 0 1 450 330 V 640 Z" fill="url(#archFill)" opacity="0.9"/>
-    <path d="M450 640 V 300 A 160 160 0 0 1 770 300 V 640 Z" fill="#F7EFE5" opacity="0.75"/>
+    <path d="M450 640 V 300 A 160 160 0 0 1 770 300 V 640 Z" fill="#F6F2EB" opacity="0.75"/>
     <path d="M770 640 V 350 A 140 140 0 0 1 1050 350 V 640 Z" fill="url(#archFill)" opacity="0.62"/>
   </g>
-  <g fill="none" stroke="#1A4228" stroke-opacity="0.2" stroke-width="1.4">
+  <g fill="none" stroke="#0E4B3A" stroke-opacity="0.2" stroke-width="1.4">
     <path d="M150 640 V 330 A 150 150 0 0 1 450 330 V 640"/>
     <path d="M450 640 V 300 A 160 160 0 0 1 770 300 V 640"/>
     <path d="M770 640 V 350 A 140 140 0 0 1 1050 350 V 640"/>
   </g>
 
-  <g fill="none" stroke="#1A4228" stroke-opacity="0.3" stroke-linecap="round" stroke-width="1.6">
+  <g fill="none" stroke="#0E4B3A" stroke-opacity="0.3" stroke-linecap="round" stroke-width="1.6">
     <path d="M980 640 V 486"/>
     <path d="M980 520 C 940 500, 920 466, 916 430"/>
     <path d="M980 550 C 1014 526, 1032 494, 1036 456"/>
     <path d="M980 574 C 952 566, 934 546, 926 524"/>
   </g>
-  <g fill="#1A4228" fill-opacity="0.16">
+  <g fill="#0E4B3A" fill-opacity="0.16">
     <ellipse cx="916" cy="424" rx="9" ry="26" transform="rotate(-24 916 424)"/>
     <ellipse cx="1040" cy="450" rx="8" ry="24" transform="rotate(22 1040 450)"/>
     <ellipse cx="922" cy="518" rx="7" ry="20" transform="rotate(-46 922 518)"/>
@@ -54,7 +54,7 @@
     <path d="M600 640 L 600 380"/>
     <path d="M560 380 H 600"/>
   </g>
-  <circle cx="250" cy="470" r="34" fill="none" stroke="#1A4228" stroke-opacity="0.18"/>
-  <circle cx="250" cy="470" r="5" fill="#1A4228" fill-opacity="0.18"/>
+  <circle cx="250" cy="470" r="34" fill="none" stroke="#0E4B3A" stroke-opacity="0.18"/>
+  <circle cx="250" cy="470" r="5" fill="#0E4B3A" fill-opacity="0.18"/>
   <rect width="1200" height="900" filter="url(#clinicGrain)" opacity="0.65" style="mix-blend-mode:multiply"/>
 </svg>
