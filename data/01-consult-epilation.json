@@ -1,0 +1,209 @@
+[
+  {
+    "slug": "konsultaciya",
+    "name": "Консультация",
+    "order": 10,
+    "services": [
+      {
+        "title": "Консультация косметолога",
+        "minutes": 30,
+        "type": "fixed",
+        "price": 2000,
+        "description": "Консультация косметолога — это комплексный подход к вашей индивидуальной красоте и естественности, рекомендации в подборе процедур, препаратов для домашнего ухода с последующим наблюдением.",
+        "note": "Бесплатная консультация в день процедуры: дарим консультацию при выполнении любой процедуры у косметолога."
+      },
+      {
+        "title": "Консультация специалиста лазерной эпиляции",
+        "minutes": 15,
+        "type": "free",
+        "price": 0,
+        "description": "Первичная консультация специалиста по подбору курса лазерной эпиляции. Бесплатно.",
+        "note": ""
+      },
+      {
+        "title": "Консультация специалиста аппаратной коррекции фигуры и омоложения лица",
+        "minutes": 15,
+        "type": "free",
+        "price": 0,
+        "description": "Первичная консультация специалиста по подбору курса аппаратной коррекции фигуры и омоложению лица. Бесплатно.",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "slug": "epilyaciya-zhenskie-kompleksy",
+    "name": "Эпиляция: Женские комплексы",
+    "order": 20,
+    "services": [
+      {
+        "title": "Комплекс Лайт №1 (подмышки + бикини глубокое)",
+        "minutes": 30,
+        "type": "fixed",
+        "price": 2290,
+        "description": "",
+        "note": "Скидка 10% по абонементу"
+      },
+      {
+        "title": "Комплекс Лайт №2 (подмышки + ноги до колен)",
+        "minutes": 45,
+        "type": "fixed",
+        "price": 2490,
+        "description": "",
+        "note": "Скидка 10% по абонементу"
+      },
+      {
+        "title": "Комплекс Стандарт (Лайт №1 + ноги до колен)",
+        "minutes": 60,
+        "type": "fixed",
+        "price": 3990,
+        "description": "",
+        "note": "Скидка 10% по абонементу"
+      },
+      {
+        "title": "Премиум 8 зон (Стандарт + бёдра + малая зона)",
+        "minutes": 75,
+        "type": "fixed",
+        "price": 5490,
+        "description": "",
+        "note": "Скидка 10% по абонементу"
+      },
+      {
+        "title": "Премиум 9 зон (Премиум 8 зон + средняя зона на выбор)",
+        "minutes": 90,
+        "type": "fixed",
+        "price": 6590,
+        "description": "",
+        "note": "Скидка 10% по абонементу"
+      },
+      {
+        "title": "Премиум 12 зон (+ руки и кисти)",
+        "minutes": 120,
+        "type": "fixed",
+        "price": 7990,
+        "description": "",
+        "note": "Скидка 10% по абонементу"
+      },
+      {
+        "title": "Безлимит (любые зоны 2 часа)",
+        "minutes": 120,
+        "type": "fixed",
+        "price": 9990,
+        "description": "",
+        "note": "Скидка 10% по абонементу"
+      }
+    ]
+  },
+  {
+    "slug": "epilyaciya-zhenskie-zony",
+    "name": "Эпиляция: Женские зоны",
+    "order": 30,
+    "services": [
+      { "title": "Шея спереди", "minutes": 15, "type": "fixed", "price": 980, "description": "", "note": "" },
+      { "title": "Шея сзади", "minutes": 15, "type": "fixed", "price": 980, "description": "", "note": "" },
+      { "title": "Щеки", "minutes": 15, "type": "fixed", "price": 900, "description": "", "note": "" },
+      { "title": "Лицо полностью", "minutes": 30, "type": "fixed", "price": 2390, "description": "", "note": "" },
+      { "title": "Верхняя губа (усики)", "minutes": 15, "type": "fixed", "price": 700, "description": "", "note": "" },
+      { "title": "Подбородок", "minutes": 15, "type": "fixed", "price": 700, "description": "", "note": "" },
+      { "title": "Бакенбарды", "minutes": 15, "type": "fixed", "price": 700, "description": "", "note": "" },
+      { "title": "Межбровье", "minutes": 15, "type": "fixed", "price": 700, "description": "", "note": "" },
+      { "title": "Подмышки", "minutes": 15, "type": "fixed", "price": 800, "description": "", "note": "" },
+      { "title": "Руки до локтя", "minutes": 15, "type": "fixed", "price": 1390, "description": "", "note": "" },
+      { "title": "Руки выше локтя", "minutes": 15, "type": "fixed", "price": 1390, "description": "", "note": "" },
+      { "title": "Плечи", "minutes": 15, "type": "fixed", "price": 1390, "description": "", "note": "" },
+      { "title": "Руки полностью", "minutes": 20, "type": "fixed", "price": 2390, "description": "", "note": "" },
+      { "title": "Кисти рук", "minutes": 15, "type": "fixed", "price": 700, "description": "", "note": "" },
+      { "title": "Бикини глубокое + межъягодичная впадина", "minutes": 20, "type": "fixed", "price": 1890, "description": "", "note": "" },
+      { "title": "Бикини классическое", "minutes": 15, "type": "fixed", "price": 1280, "description": "", "note": "" },
+      { "title": "Бикини среднее", "minutes": 15, "type": "fixed", "price": 1390, "description": "", "note": "" },
+      { "title": "Живот полностью", "minutes": 15, "type": "fixed", "price": 1280, "description": "", "note": "" },
+      { "title": "Спина полностью", "minutes": 30, "type": "fixed", "price": 1890, "description": "", "note": "" },
+      { "title": "Поясница", "minutes": 15, "type": "fixed", "price": 1390, "description": "", "note": "" },
+      { "title": "Ягодицы", "minutes": 15, "type": "fixed", "price": 1390, "description": "", "note": "" },
+      { "title": "Грудь", "minutes": 15, "type": "fixed", "price": 1390, "description": "", "note": "" },
+      { "title": "Линия живота", "minutes": 15, "type": "fixed", "price": 700, "description": "", "note": "" },
+      { "title": "Межъягодичная впадина", "minutes": 15, "type": "fixed", "price": 700, "description": "", "note": "" },
+      { "title": "Ареолы", "minutes": 15, "type": "fixed", "price": 700, "description": "", "note": "" },
+      { "title": "Голени + колени", "minutes": 30, "type": "fixed", "price": 1980, "description": "", "note": "" },
+      { "title": "Бедра спереди", "minutes": 15, "type": "fixed", "price": 1500, "description": "", "note": "" },
+      { "title": "Бедра сзади", "minutes": 15, "type": "fixed", "price": 1500, "description": "", "note": "" },
+      { "title": "Бедра + колени", "minutes": 30, "type": "fixed", "price": 2380, "description": "", "note": "" },
+      { "title": "Ноги полностью", "minutes": 45, "type": "fixed", "price": 3740, "description": "", "note": "" },
+      { "title": "Стопы", "minutes": 15, "type": "fixed", "price": 700, "description": "", "note": "" }
+    ]
+  },
+  {
+    "slug": "epilyaciya-muzhskie-kompleksy",
+    "name": "Эпиляция: Мужские комплексы",
+    "order": 40,
+    "services": [
+      {
+        "title": "Контур бороды (шея + бакенбарды + щеки + верхняя губа + подбородок)",
+        "minutes": 60,
+        "type": "fixed",
+        "price": 3000,
+        "description": "",
+        "note": "Скидка 10% по абонементу"
+      },
+      {
+        "title": "Подмышки + бикини глубокое",
+        "minutes": 60,
+        "type": "fixed",
+        "price": 3000,
+        "description": "",
+        "note": "Скидка 10% по абонементу"
+      },
+      {
+        "title": "Торс (подмышки + живот + спина + плечи + грудь)",
+        "minutes": 90,
+        "type": "fixed",
+        "price": 7000,
+        "description": "",
+        "note": "Скидка 10% по абонементу"
+      },
+      {
+        "title": "Безлимит (любые зоны 2 часа)",
+        "minutes": 135,
+        "type": "fixed",
+        "price": 10990,
+        "description": "",
+        "note": "Скидка 10% по абонементу"
+      }
+    ]
+  },
+  {
+    "slug": "epilyaciya-muzhskie-zony",
+    "name": "Эпиляция: Мужские зоны",
+    "order": 50,
+    "services": [
+      { "title": "Шея спереди МУЖ", "minutes": 15, "type": "fixed", "price": 1300, "description": "", "note": "" },
+      { "title": "Шея сзади МУЖ", "minutes": 60, "type": "fixed", "price": 1300, "description": "", "note": "" },
+      { "title": "Щеки МУЖ", "minutes": 15, "type": "fixed", "price": 1300, "description": "", "note": "" },
+      { "title": "Лицо полностью МУЖ", "minutes": 30, "type": "fixed", "price": 2600, "description": "", "note": "" },
+      { "title": "Верхняя губа МУЖ", "minutes": 15, "type": "fixed", "price": 900, "description": "", "note": "" },
+      { "title": "Подбородок МУЖ", "minutes": 15, "type": "fixed", "price": 900, "description": "", "note": "" },
+      { "title": "Бакенбарды МУЖ", "minutes": 15, "type": "fixed", "price": 900, "description": "", "note": "" },
+      { "title": "Межбровье МУЖ", "minutes": 15, "type": "fixed", "price": 900, "description": "", "note": "" },
+      { "title": "Подмышки МУЖ", "minutes": 15, "type": "fixed", "price": 1000, "description": "", "note": "" },
+      { "title": "Руки до локтя МУЖ", "minutes": 30, "type": "fixed", "price": 1700, "description": "", "note": "" },
+      { "title": "Руки выше локтя МУЖ", "minutes": 30, "type": "fixed", "price": 1700, "description": "", "note": "" },
+      { "title": "Плечи МУЖ", "minutes": 15, "type": "fixed", "price": 1700, "description": "", "note": "" },
+      { "title": "Руки полностью МУЖ", "minutes": 60, "type": "fixed", "price": 3000, "description": "", "note": "" },
+      { "title": "Кисти рук МУЖ", "minutes": 15, "type": "fixed", "price": 900, "description": "", "note": "" },
+      { "title": "Бикини глубокое + межъягодичная впадина МУЖ", "minutes": 20, "type": "fixed", "price": 2700, "description": "", "note": "" },
+      { "title": "Бикини классическое МУЖ", "minutes": 15, "type": "fixed", "price": 1500, "description": "", "note": "" },
+      { "title": "Бикини среднее МУЖ", "minutes": 15, "type": "fixed", "price": 1800, "description": "", "note": "" },
+      { "title": "Живот полностью МУЖ", "minutes": 15, "type": "fixed", "price": 1800, "description": "", "note": "" },
+      { "title": "Спина полностью МУЖ", "minutes": 30, "type": "fixed", "price": 2800, "description": "", "note": "" },
+      { "title": "Поясница МУЖ", "minutes": 15, "type": "fixed", "price": 1500, "description": "", "note": "" },
+      { "title": "Ягодицы МУЖ", "minutes": 15, "type": "fixed", "price": 1500, "description": "", "note": "" },
+      { "title": "Грудь МУЖ", "minutes": 15, "type": "fixed", "price": 1500, "description": "", "note": "" },
+      { "title": "Линия живота МУЖ", "minutes": 15, "type": "fixed", "price": 900, "description": "", "note": "" },
+      { "title": "Межъягодичная впадина МУЖ", "minutes": 15, "type": "fixed", "price": 900, "description": "", "note": "" },
+      { "title": "Ареолы МУЖ", "minutes": 15, "type": "fixed", "price": 900, "description": "", "note": "" },
+      { "title": "Голени + колени МУЖ", "minutes": 30, "type": "fixed", "price": 2700, "description": "", "note": "" },
+      { "title": "Бедра полностью + колени МУЖ", "minutes": 30, "type": "fixed", "price": 3000, "description": "", "note": "" },
+      { "title": "Ноги полностью МУЖ", "minutes": 45, "type": "fixed", "price": 4800, "description": "", "note": "" },
+      { "title": "Стопы МУЖ", "minutes": 15, "type": "fixed", "price": 900, "description": "", "note": "" }
+    ]
+  }
+]

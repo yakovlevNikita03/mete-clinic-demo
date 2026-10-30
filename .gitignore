@@ -1,0 +1,14 @@
+# Собранные архивы — пересобираются командой node tools/build-zips.js
+*.zip
+
+# Системный и редакторский мусор
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+
+# Зависимости и логи
+node_modules/
+*.log
+*.tmp

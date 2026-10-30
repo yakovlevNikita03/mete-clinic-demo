@@ -1,0 +1,150 @@
+/**
+ * Админ-стили MÉTE CLINIC — Content.
+ */
+
+.mcc-box {
+  padding: 4px 2px 8px;
+}
+
+.mcc-box__intro {
+  max-width: 760px;
+  margin: 0 0 18px;
+  color: #50575e;
+}
+
+.mcc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0 20px;
+}
+
+.mcc-field {
+  margin: 0 0 16px;
+}
+
+.mcc-field label {
+  display: block;
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+.mcc-field input[type="text"],
+.mcc-field input[type="url"],
+.mcc-field input[type="number"],
+.mcc-field select,
+.mcc-field textarea {
+  width: 100%;
+  max-width: 520px;
+}
+
+.mcc-field--check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mcc-field--check label {
+  margin: 0;
+  font-weight: 400;
+}
+
+.mcc-hint {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  line-height: 1.45;
+  color: #646970;
+}
+
+.mcc-hint--warning {
+  color: #8a4b00;
+}
+
+.mcc-grid--price {
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  padding-bottom: 4px;
+  border-bottom: 1px solid #f0f0f1;
+}
+
+.mcc-field[hidden] {
+  display: none !important;
+}
+
+.mcc-fieldset {
+  margin: 0 0 8px;
+  padding: 10px 16px 4px;
+  border: 1px solid #dcdcde;
+  border-radius: 6px;
+}
+
+.mcc-fieldset__legend {
+  padding: 0 6px;
+  font-weight: 600;
+}
+
+.mcc-field--order {
+  max-width: 320px;
+}
+
+/* Категории: порядок и изображение */
+
+.mcc-term-image {
+  max-width: 360px;
+}
+
+.mcc-term-image__preview {
+  display: block;
+  width: 120px;
+  height: 90px;
+  margin-bottom: 8px;
+  border-radius: 6px;
+  background: #f0f0f1;
+  object-fit: cover;
+}
+
+.mcc-term-image__preview[hidden] {
+  display: none;
+}
+
+.mcc-term-image__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+}
+
+.mcc-term-image__remove {
+  color: #b32d2e;
+}
+
+/* Узкий экран админки */
+
+@media screen and (max-width: 782px) {
+  .mcc-grid,
+  .mcc-grid--price {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .mcc-field input[type="text"],
+  .mcc-field input[type="url"],
+  .mcc-field input[type="number"],
+  .mcc-field select,
+  .mcc-field textarea {
+    max-width: none;
+  }
+
+  .mcc-field--order {
+    max-width: none;
+  }
+}
+
+.mcc-settings__intro {
+  max-width: 780px;
+}
+
+.mcc-settings__note {
+  max-width: 780px;
+  color: #50575e;
+}

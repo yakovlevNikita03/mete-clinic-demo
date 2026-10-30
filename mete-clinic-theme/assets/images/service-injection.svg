@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="injBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F6F2EB"/>
+      <stop offset="0.55" stop-color="#E7DCCF"/>
+      <stop offset="1" stop-color="#C9C1B8"/>
+    </linearGradient>
+    <radialGradient id="injGlow" cx="0.7" cy="0.28" r="0.6">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.9"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="injGrain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.05"/></feComponentTransfer>
+    </filter>
+  </defs>
+  <rect width="800" height="600" fill="url(#injBg)"/>
+  <rect width="800" height="600" fill="url(#injGlow)"/>
+  <g fill="#0E4B3A" fill-opacity="0.14">
+    <g id="dots">
+      <circle cx="120" cy="120" r="3"/><circle cx="180" cy="120" r="3"/><circle cx="240" cy="120" r="3"/><circle cx="300" cy="120" r="3"/>
+      <circle cx="120" cy="180" r="3"/><circle cx="180" cy="180" r="3"/><circle cx="240" cy="180" r="3"/><circle cx="300" cy="180" r="3"/>
+      <circle cx="120" cy="240" r="3"/><circle cx="180" cy="240" r="3"/><circle cx="240" cy="240" r="3"/><circle cx="300" cy="240" r="3"/>
+      <circle cx="120" cy="300" r="3"/><circle cx="180" cy="300" r="3"/><circle cx="240" cy="300" r="3"/><circle cx="300" cy="300" r="3"/>
+    </g>
+  </g>
+  <g fill="none" stroke="#0E4B3A" stroke-linecap="round">
+    <path d="M480 168 C 540 214, 540 290, 480 336 C 420 290, 420 214, 480 168 Z" stroke-opacity="0.4" stroke-width="1.8"/>
+    <path d="M480 226 V 316" stroke-opacity="0.18" stroke-width="1.2"/>
+    <circle cx="620" cy="420" r="96" stroke-opacity="0.18" stroke-width="1.2"/>
+    <circle cx="620" cy="420" r="146" stroke-opacity="0.1" stroke-width="1"/>
+    <path d="M420 470 C 500 430, 570 440, 650 500" stroke-opacity="0.16" stroke-width="1.2"/>
+  </g>
+  <g stroke="#FFFFFF" stroke-opacity="0.55" stroke-width="1">
+    <path d="M560 120 L 700 120"/>
+    <path d="M580 144 L 720 144"/>
+  </g>
+  <rect width="800" height="600" filter="url(#injGrain)" opacity="0.7" style="mix-blend-mode:multiply"/>
+</svg>
