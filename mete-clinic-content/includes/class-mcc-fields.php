@@ -88,52 +88,7 @@ class MCC_Fields {
 		add_action( 'add_meta_boxes', array( __CLASS__, 'add_boxes' ) );
 		add_action( 'save_post_' . MCC_Post_Types::SERVICE, array( __CLASS__, 'save_service' ), 10, 2 );
 		add_action( 'save_post_' . MCC_Post_Types::SPECIALIST, array( __CLASS__, 'save_specialist' ), 10, 2 );
-		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'assets' ) );
 		add_action( 'admin_notices', array( __CLASS__, 'notices' ) );
-	}
-
-	/**
-	 * Meta box CSS.
-	 *
-	 * @param string $hook Current admin page.
-	 * @return void
-	 */
-	public static function assets( $hook ) {
-		unset( $hook );
-
-		$screen = get_current_screen();
-
-		if ( ! $screen instanceof WP_Screen ) {
-			return;
-		}
-
-		$types = array( MCC_Post_Types::SERVICE, MCC_Post_Types::SPECIALIST );
-
-		if ( ! in_array( (string) $screen->post_type, $types, true ) || 'post' !== $screen->base ) {
-			return;
-		}
-
-		wp_enqueue_style( 'mcc-admin', MCC_URL . 'assets/css/admin.css', array(), MCC_VERSION );
-		wp_enqueue_script( 'mcc-admin', MCC_URL . 'assets/js/admin.js', array(), MCC_VERSION, true );
-
-		wp_localize_script(
-			'mcc-admin',
-			'mccAdmin',
-			array(
-				'priceLabels' => array(
-					'fixed' => __( 'Цена, ₽', 'mete-clinic-content' ),
-					'from'  => __( 'Цена «от», ₽', 'mete-clinic-content' ),
-					'range' => __( 'Цена «от», ₽', 'mete-clinic-content' ),
-					'free'  => __( 'Цена, ₽', 'mete-clinic-content' ),
-				),
-				'priceHints'  => array(
-					'fixed' => __( 'Одно значение: 2290 или 2290,50. Пустое поле — цена по запросу.', 'mete-clinic-content' ),
-					'from'  => __( 'Минимальная цена. На сайте выводится как «от 2 290 ₽».', 'mete-clinic-content' ),
-					'range' => __( 'Минимальная цена диапазона.', 'mete-clinic-content' ),
-					'free'  => __( 'На сайте выводится «Бесплатно». Поля цены не нужны.', 'mete-clinic-content' ),
-				),
-			)
-		);
 	}
 
 	/**
@@ -266,12 +221,6 @@ class MCC_Fields {
 						</span>
 					<?php endif; ?>
 				</p>
-
-				<p class="mcc-field">
-					<label for="mcc-yclients-id"><?php esc_html_e( 'ID услуги в Yclients', 'mete-clinic-content' ); ?></label>
-					<input type="text" id="mcc-yclients-id" name="mcc_yclients_service_id" value="<?php echo esc_attr( $yclients ); ?>" maxlength="64">
-					<span class="mcc-hint"><?php esc_html_e( 'Необязательно, для будущей интеграции.', 'mete-clinic-content' ); ?></span>
-				</p>
 			</div>
 
 			<p class="mcc-field">
@@ -279,6 +228,15 @@ class MCC_Fields {
 				<input type="url" id="mcc-booking-url" name="mcc_booking_url" value="<?php echo esc_attr( $booking ); ?>" class="widefat" placeholder="https://">
 				<span class="mcc-hint"><?php esc_html_e( 'Необязательно. Если пусто, используется общая ссылка записи из настроек сайта.', 'mete-clinic-content' ); ?></span>
 			</p>
+
+			<details class="mcc-details">
+				<summary><?php esc_html_e( 'Дополнительно', 'mete-clinic-content' ); ?></summary>
+				<p class="mcc-field">
+					<label for="mcc-yclients-id"><?php esc_html_e( 'ID услуги в Yclients', 'mete-clinic-content' ); ?></label>
+					<input type="text" id="mcc-yclients-id" name="mcc_yclients_service_id" value="<?php echo esc_attr( $yclients ); ?>" maxlength="64">
+					<span class="mcc-hint"><?php esc_html_e( 'Необязательно. Нужно только для сверки с Yclients.', 'mete-clinic-content' ); ?></span>
+				</p>
+			</details>
 
 			<fieldset class="mcc-fieldset">
 				<legend class="mcc-fieldset__legend"><?php esc_html_e( 'Главная страница', 'mete-clinic-content' ); ?></legend>
@@ -329,12 +287,6 @@ class MCC_Fields {
 					<input type="text" id="mcc-experience" name="mcc_experience" value="<?php echo esc_attr( $experience ); ?>" maxlength="60" placeholder="<?php esc_attr_e( 'например, 12 лет', 'mete-clinic-content' ); ?>">
 					<span class="mcc-hint"><?php esc_html_e( 'Только подтверждённые данные.', 'mete-clinic-content' ); ?></span>
 				</p>
-
-				<p class="mcc-field">
-					<label for="mcc-yclients-staff"><?php esc_html_e( 'ID сотрудника в Yclients', 'mete-clinic-content' ); ?></label>
-					<input type="text" id="mcc-yclients-staff" name="mcc_yclients_staff_id" value="<?php echo esc_attr( $yclients ); ?>" maxlength="64">
-					<span class="mcc-hint"><?php esc_html_e( 'Необязательно, для будущей интеграции.', 'mete-clinic-content' ); ?></span>
-				</p>
 			</div>
 
 			<p class="mcc-field">
@@ -348,6 +300,15 @@ class MCC_Fields {
 				<input type="url" id="mcc-specialist-booking" name="mcc_booking_url" value="<?php echo esc_attr( $booking ); ?>" class="widefat" placeholder="https://">
 				<span class="mcc-hint"><?php esc_html_e( 'Профиль специалиста в Yclients. Если пусто, используется общая ссылка записи.', 'mete-clinic-content' ); ?></span>
 			</p>
+
+			<details class="mcc-details">
+				<summary><?php esc_html_e( 'Дополнительно', 'mete-clinic-content' ); ?></summary>
+				<p class="mcc-field">
+					<label for="mcc-yclients-staff"><?php esc_html_e( 'ID сотрудника в Yclients', 'mete-clinic-content' ); ?></label>
+					<input type="text" id="mcc-yclients-staff" name="mcc_yclients_staff_id" value="<?php echo esc_attr( $yclients ); ?>" maxlength="64">
+					<span class="mcc-hint"><?php esc_html_e( 'Необязательно. Нужно только для сверки с Yclients.', 'mete-clinic-content' ); ?></span>
+				</p>
+			</details>
 		</div>
 		<?php
 	}
@@ -406,7 +367,8 @@ class MCC_Fields {
 			sanitize_text_field( self::post_string( 'mcc_price_note' ) )
 		);
 
-		$duration_raw = trim( self::post_string( 'mcc_duration' ) );		$duration     = MCC_Sanitize::duration( $duration_raw );
+		$duration_raw = trim( self::post_string( 'mcc_duration' ) );
+		$duration     = MCC_Sanitize::duration( $duration_raw );
 		$stored       = (string) get_post_meta( $post_id, self::META_DURATION, true );
 
 		if ( '' !== $duration_raw && '' === $duration ) {

@@ -69,7 +69,7 @@ class MCC_Catalog_Import {
 			add_query_arg(
 				'mcc-catalog',
 				'1',
-				admin_url( 'admin.php?page=mcc-settings' )
+				admin_url( 'admin.php?page=' . MCC_Settings::TOOLS )
 			)
 		);
 		exit;

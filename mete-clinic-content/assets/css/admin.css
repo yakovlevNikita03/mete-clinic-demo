@@ -143,8 +143,379 @@
 .mcc-settings__intro {
   max-width: 780px;
 }
-
 .mcc-settings__note {
   max-width: 780px;
   color: #50575e;
+}
+
+.form-table .mcc-radio label {
+  display: block;
+  margin: 0 0 8px;
+}
+
+.form-table .mcc-radio label:last-child {
+  margin-bottom: 0;
+}
+
+/* Раскрывающиеся блоки «Дополнительно» */
+
+.mcc-details {
+  margin: 0 0 16px;
+  padding: 10px 14px;
+  border: 1px solid #dcdcde;
+  border-radius: 6px;
+  background: #fff;
+}
+
+.mcc-details summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.mcc-details[open] summary {
+  margin-bottom: 10px;
+}
+
+.mcc-details .mcc-field:last-child {
+  margin-bottom: 0;
+}
+
+/* Настройки: вкладки и проверка ссылок */
+
+.mcc-tabs {
+  margin: 12px 0 12px;
+}
+
+.mcc-panel {
+  padding-top: 4px;
+}
+
+.mcc-field-row {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  max-width: 100%;
+}
+
+.mcc-field-row input[type="url"],
+.mcc-field-row input[type="text"] {
+  min-width: min(420px, 100%);
+}
+
+.mcc-link-result {
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.mcc-link-result.is-ok {
+  color: #007017;
+}
+
+.mcc-link-result.is-error {
+  color: #b32d2e;
+}
+
+.mcc-preview-line {
+  margin: 4px 0 0;
+  color: #50575e;
+}
+
+.mcc-preview-value {
+  font-weight: 600;
+  color: #1d2327;
+}
+
+/* Обзор */
+
+.mcc-page-intro {
+  max-width: 780px;
+  margin: 8px 0 4px;
+  color: #50575e;
+}
+
+.mcc-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 16px;
+  margin: 16px 0 20px;
+}
+
+.mcc-stat {
+  padding: 16px 18px;
+  border: 1px solid #dcdcde;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.mcc-card__value {
+  display: block;
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: #1d2327;
+}
+
+.mcc-card__label {
+  display: block;
+  margin-top: 4px;
+  color: #50575e;
+}
+
+.mcc-columns {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.mcc-dashboard .card,
+.mcc-price .card,
+.mcc-tools .card {
+  max-width: none;
+  margin: 16px 0;
+  padding: 8px 20px 16px;
+}
+
+.mcc-checklist {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mcc-checklist li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 0;
+  border-top: 1px solid #f0f0f1;
+}
+
+.mcc-checklist li:first-child {
+  border-top: 0;
+}
+
+.mcc-checklist__icon {
+  flex: 0 0 20px;
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  border-radius: 50%;
+  background: #f0f0f1;
+  position: relative;
+}
+
+.mcc-checklist li.is-ok .mcc-checklist__icon {
+  background: #edfaef;
+  box-shadow: inset 0 0 0 1px #68de7c;
+}
+
+.mcc-checklist li.is-ok .mcc-checklist__icon::before {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 4px;
+  width: 5px;
+  height: 9px;
+  border: solid #007017;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.mcc-checklist li.is-missing .mcc-checklist__icon {
+  background: #fcf9e8;
+  box-shadow: inset 0 0 0 1px #f0c33c;
+}
+
+.mcc-checklist li.is-missing .mcc-checklist__icon::before {
+  content: "!";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 1px;
+  text-align: center;
+  font-weight: 700;
+  color: #8a4b00;
+}
+
+.mcc-checklist__text {
+  flex: 1 1 auto;
+}
+
+.mcc-checklist__link {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+.mcc-issues {
+  margin: 0 0 12px;
+  padding-left: 18px;
+}
+
+.mcc-issues li {
+  margin-bottom: 4px;
+}
+
+.mcc-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.mcc-steps {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.mcc-steps li {
+  margin-bottom: 6px;
+}
+
+.mcc-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 8px 0 16px;
+}
+
+.mcc-badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 12px;
+  background: #f0f0f1;
+  color: #1d2327;
+  font-size: 12px;
+  line-height: 20px;
+  white-space: nowrap;
+}
+
+.mcc-badge--create {
+  background: #edfaef;
+  color: #007017;
+}
+
+.mcc-badge--update {
+  background: #eef4fb;
+  color: #135e96;
+}
+
+.mcc-badge--error {
+  background: #fcf0f1;
+  color: #b32d2e;
+}
+
+.mcc-table td,
+.mcc-table th {
+  vertical-align: top;
+}
+
+.mcc-table--preview td {
+  font-size: 13px;
+}
+
+.mcc-changes {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.mcc-changes li {
+  margin-bottom: 2px;
+}
+
+.mcc-old {
+  color: #646970;
+  text-decoration: line-through;
+}
+
+.mcc-new {
+  font-weight: 600;
+  color: #007017;
+}
+
+.mcc-errors {
+  margin: 0 0 8px;
+  padding-left: 18px;
+  color: #b32d2e;
+}
+
+/* Списки услуг и специалистов */
+
+.edit-tags-php .wp-list-table .column-name {
+  width: 22%;
+}
+
+.edit-tags-php .wp-list-table .column-mcc_image {
+  width: 120px;
+}
+
+.edit-tags-php .wp-list-table .column-description {
+  width: 30%;
+}
+
+.mcc-qe-data {
+  display: none;
+}
+
+.mcc-yes {
+  color: #007017;
+  font-weight: 600;
+}
+
+.mcc-no {
+  color: #a7aaad;
+}
+
+.mcc-row-warning > th,
+.mcc-row-warning > td {
+  box-shadow: inset 3px 0 0 #dba617;
+}
+
+.mcc-drag-handle {
+  margin-right: 6px;
+  color: #8c8f94;
+  cursor: move;
+  vertical-align: middle;
+}
+
+.mcc-sortable-list #the-list tr:hover .mcc-drag-handle {
+  color: #2271b1;
+}
+
+.mcc-sort-saved > tr {
+  transition: background-color 0.3s ease;
+}
+
+.mcc-bulk-cat {
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+.mcc-quick .inline-edit-group {
+  display: block;
+  margin: 0 0 8px;
+}
+
+.mcc-quick .inline-edit-group .title {
+  display: block;
+  margin-bottom: 2px;
+}
+
+.mcc-quick__check {
+  display: flex !important;
+  align-items: center;
+  gap: 6px;
+}
+
+.mcc-quick input[type="text"],
+.mcc-quick input[type="number"],
+.mcc-quick select {
+  width: 100%;
+  max-width: 240px;
+}
+
+@media screen and (max-width: 960px) {
+  .mcc-columns {
+    grid-template-columns: 1fr;
+  }
 }

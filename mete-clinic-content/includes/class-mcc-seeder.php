@@ -86,7 +86,7 @@ class MCC_Seeder {
 			add_query_arg(
 				'mcc-imported',
 				'1',
-				admin_url( 'admin.php?page=mcc-settings' )
+				admin_url( 'admin.php?page=' . MCC_Settings::TOOLS )
 			)
 		);
 		exit;

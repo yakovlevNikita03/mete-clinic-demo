@@ -42,8 +42,6 @@ class MCC_Term_Fields {
 
 		add_filter( 'manage_edit-' . MCC_Post_Types::TAX . '_columns', array( __CLASS__, 'columns' ) );
 		add_filter( 'manage_' . MCC_Post_Types::TAX . '_custom_column', array( __CLASS__, 'column' ), 10, 3 );
-
-		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'assets' ) );
 	}
 
 	/**
@@ -226,35 +224,5 @@ class MCC_Term_Fields {
 		}
 
 		return $content;
-	}
-
-	/**
-	 * Term screen assets.
-	 *
-	 * @return void
-	 */
-	public static function assets() {
-		$screen = get_current_screen();
-
-		if ( ! $screen instanceof WP_Screen || MCC_Post_Types::TAX !== (string) $screen->taxonomy ) {
-			return;
-		}
-
-		if ( ! in_array( (string) $screen->base, array( 'edit-tags', 'term' ), true ) ) {
-			return;
-		}
-
-		wp_enqueue_style( 'mcc-admin', MCC_URL . 'assets/css/admin.css', array(), MCC_VERSION );
-		wp_enqueue_media();
-		wp_enqueue_script( 'mcc-admin', MCC_URL . 'assets/js/admin.js', array(), MCC_VERSION, true );
-
-		wp_localize_script(
-			'mcc-admin',
-			'mccAdmin',
-			array(
-				'mediaTitle'  => __( 'Изображение категории', 'mete-clinic-content' ),
-				'mediaButton' => __( 'Использовать изображение', 'mete-clinic-content' ),
-			)
-		);
 	}
 }

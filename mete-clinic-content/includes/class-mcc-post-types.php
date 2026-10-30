@@ -202,6 +202,7 @@ class MCC_Post_Types {
 
 			if ( 'title' === $key ) {
 				$new['mcc_price']      = __( 'Цена', 'mete-clinic-content' );
+				$new['mcc_desc']       = __( 'Описание', 'mete-clinic-content' );
 				$new['mcc_home']       = __( 'На главной', 'mete-clinic-content' );
 				$new['mcc_home_order'] = __( 'Порядок на главной', 'mete-clinic-content' );
 				$new['mcc_booking']    = __( 'Запись', 'mete-clinic-content' );
@@ -222,6 +223,35 @@ class MCC_Post_Types {
 		if ( 'mcc_price' === $column ) {
 			$price = MCC_Content::format_price( $post_id );
 			echo esc_html( '' !== $price ? $price : '—' );
+
+			$type       = (string) get_post_meta( $post_id, MCC_Fields::META_PRICE_TYPE, true );
+			$price_raw  = (string) MCC_Sanitize::price( get_post_meta( $post_id, MCC_Fields::META_PRICE, true ) );
+			$max_raw    = (string) MCC_Sanitize::price( get_post_meta( $post_id, MCC_Fields::META_PRICE_MAX, true ) );
+			$duration   = (string) get_post_meta( $post_id, MCC_Fields::META_DURATION, true );
+			$show_home  = '1' === (string) get_post_meta( $post_id, MCC_Fields::META_SHOW_HOME, true ) ? '1' : '';
+			$home_order = (string) get_post_meta( $post_id, MCC_Fields::META_HOME_ORDER, true );
+
+			printf(
+				'<span hidden class="mcc-qe-data" data-type="%1$s" data-price="%2$s" data-price-max="%3$s" data-duration="%4$s" data-show-home="%5$s" data-home-order="%6$s"></span>',
+				esc_attr( in_array( $type, array( 'fixed', 'from', 'range', 'free' ), true ) ? $type : 'fixed' ),
+				esc_attr( $price_raw ),
+				esc_attr( $max_raw ),
+				esc_attr( preg_match( '/^[0-9]+$/', $duration ) ? $duration : '' ),
+				esc_attr( $show_home ),
+				esc_attr( '' !== $home_order ? $home_order : '0' )
+			);
+
+			return;
+		}
+
+		if ( 'mcc_desc' === $column ) {
+			$post = get_post( $post_id );
+			$text = $post instanceof WP_Post ? trim( wp_strip_all_tags( (string) $post->post_content ) ) : '';
+
+			echo '' !== $text
+				? '<span class="mcc-yes" aria-label="' . esc_attr__( 'Описание есть', 'mete-clinic-content' ) . '">✓</span>'
+				: '<span class="mcc-no" aria-label="' . esc_attr__( 'Описания нет', 'mete-clinic-content' ) . '">—</span>';
+
 			return;
 		}
 
