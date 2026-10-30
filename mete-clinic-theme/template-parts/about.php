@@ -19,7 +19,7 @@ $mete_clinic_img = mete_asset_url( 'images/clinic.svg' );
 			<h2 class="section__title" id="about-title"><?php esc_html_e( 'Клиника эпиляции и косметологии в Тюмени', 'mete-clinic' ); ?></h2>
 			<p class="about__text"><?php esc_html_e( 'MÉTE CLINIC объединяет направления по уходу за кожей и телом: от лазерной эпиляции и чисток лица до аппаратных и инъекционных процедур. Программу и подходящий формат визита обсуждаем индивидуально, а полный перечень услуг и расписание ведём в Yclients.', 'mete-clinic' ); ?></p>
 			<ul class="about__list">
-				<li><?php esc_html_e( 'Четыре направления услуг и команда специалистов.', 'mete-clinic' ); ?></li>
+				<li><?php esc_html_e( 'Направления услуг и команда специалистов.', 'mete-clinic' ); ?></li>
 				<li><?php esc_html_e( 'Запись на процедуру — по телефону или онлайн.', 'mete-clinic' ); ?></li>
 				<li><?php esc_html_e( 'Адрес и карта — в блоке контактов.', 'mete-clinic' ); ?></li>
 			</ul>
