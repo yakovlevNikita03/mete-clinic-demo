@@ -35,7 +35,7 @@ class MCC_Term_Fields {
 	 */
 	public static function init() {
 		add_action( MCC_Post_Types::TAX . '_add_form_fields', array( __CLASS__, 'add_fields' ) );
-		add_action( MCC_Post_Types::TAX . '_edit_form_fields', array( __CLASS__, 'edit_fields' ) );
+		add_action( MCC_Post_Types::TAX . '_edit_form_fields', array( __CLASS__, 'edit_fields' ), 10, 2 );
 
 		add_action( 'created_' . MCC_Post_Types::TAX, array( __CLASS__, 'save' ) );
 		add_action( 'edited_' . MCC_Post_Types::TAX, array( __CLASS__, 'save' ) );
@@ -58,13 +58,13 @@ class MCC_Term_Fields {
 		<div class="form-field mcc-term-field">
 			<label for="mcc-cat-order"><?php esc_html_e( 'Порядок категории', 'mete-clinic-content' ); ?></label>
 			<input type="number" name="mcc_cat_order" id="mcc-cat-order" value="0" min="0" max="9999" step="1">
-			<p><?php esc_html_e( 'Меньше число — раньше карточка направления на главной.', 'mete-clinic-content' ); ?></p>
+			<p class="description"><?php esc_html_e( 'Меньше число — раньше карточка направления на главной.', 'mete-clinic-content' ); ?></p>
 		</div>
 
 		<div class="form-field mcc-term-field">
 			<label for="mcc-cat-image"><?php esc_html_e( 'Изображение категории', 'mete-clinic-content' ); ?></label>
 			<?php self::image_control( 0 ); ?>
-			<p><?php esc_html_e( 'Необязательно. Если пусто, используется встроенная иллюстрация направления.', 'mete-clinic-content' ); ?></p>
+			<p class="description"><?php esc_html_e( 'Необязательно. Если пусто, используется встроенная иллюстрация направления.', 'mete-clinic-content' ); ?></p>
 		</div>
 		<?php
 	}
@@ -220,7 +220,7 @@ class MCC_Term_Fields {
 				return '&mdash;';
 			}
 
-			return '<img src="' . esc_url( $url ) . '" alt="" width="40" height="40" style="border-radius:4px;object-fit:cover;display:block;">';
+			return '<img class="mcc-term-thumb" src="' . esc_url( $url ) . '" alt="" width="40" height="40">';
 		}
 
 		return $content;

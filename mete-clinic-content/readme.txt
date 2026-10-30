@@ -4,7 +4,7 @@ Tags: custom-post-types, clinic, services, specialists
 Requires at least: 6.0
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 1.3.0
+Stable tag: 1.3.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -35,6 +35,12 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 3. Откройте «MÉTE CLINIC → Настройки сайта» и подтвердите контакты.
 
 == Changelog ==
+
+= 1.3.1 =
+* Исправлена вёрстка поля «Порядок» в категориях услуг: узкое числовое поле
+  в формах добавления и редактирования, ровный столбец в списке.
+* Новая категория больше не наследует изображение предыдущей: после
+  добавления форма сбрасывается.
 
 = 1.3.0 =
 * Меню плагина разбито на подпункты: «Обзор», «Услуги», «Категории услуг»,

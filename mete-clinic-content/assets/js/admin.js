@@ -266,6 +266,50 @@
     });
   });
 
+  /* Сброс формы «Добавить категорию» -------------------------------------- */
+
+  if (window.jQuery) {
+    (function ($) {
+      var addForm = document.getElementById("addtag");
+
+      if (!addForm || !addForm.querySelector("[data-mcc-media]")) {
+        return;
+      }
+
+      $(document).on("ajaxComplete", function (event, xhr, settings) {
+        var data = settings ? settings.data : "";
+
+        if (typeof data !== "string" || data.indexOf("action=add-tag") === -1) {
+          return;
+        }
+
+        // Ядро очищает видимые поля после нашего обработчика, поэтому ждём его.
+        window.setTimeout(function () {
+          var name = document.getElementById("tag-name");
+          var response = document.getElementById("ajax-response");
+
+          if (!name || name.value !== "") {
+            return;
+          }
+
+          if (response && response.querySelector(".error, .notice-error")) {
+            return;
+          }
+
+          Array.prototype.forEach.call(addForm.querySelectorAll("[data-mcc-media]"), function (wrap) {
+            setImage(wrap, "", "");
+          });
+
+          var order = document.getElementById("mcc-cat-order");
+
+          if (order) {
+            order.value = "0";
+          }
+        }, 0);
+      });
+    })(window.jQuery);
+  }
+
   /* Быстрое редактирование услуги ---------------------------------------- */
 
   if (window.jQuery) {
