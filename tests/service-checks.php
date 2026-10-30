@@ -217,6 +217,6 @@ if ( $term_id > 0 ) {
 mete_check_say( '' );
 mete_check_say( sprintf( 'Проверок: %d, ошибок: %d', (int) $GLOBALS['mete_check_count'], (int) $GLOBALS['mete_check_failures'] ) );
 
-if ( (int) $GLOBALS['mete_check_failures'] > 0 ) {
+if ( (int) $GLOBALS['mete_check_failures'] > 0 && ! defined( 'MCC_CHECKS_COMBINED' ) ) {
 	exit( 1 );
 }

@@ -1,8 +1,10 @@
 /**
  * Минимальная проверка синтаксиса PHP без PHP CLI.
  *
- * Использует php-parser (npm), распакованный в
- * C:\Users\nyakovlev\AppData\Local\Temp\php-lint\package
+ * Использует пакет php-parser (npm). Путь ищется по порядку:
+ *   1. переменная окружения MCC_PHP_PARSER;
+ *   2. локальный node_modules рядом с этим скриптом;
+ *   3. временная папка php-lint в профиле пользователя.
  *
  * Запуск:
  *   node tools/php-lint.js <каталог>
@@ -12,11 +14,29 @@
  */
 
 const fs = require( 'fs' );
+const os = require( 'os' );
 const path = require( 'path' );
 
-const PARSER_PATH = 'C:/Users/nyakovlev/AppData/Local/Temp/php-lint/package/src/index.js';
+function resolveParser() {
+	const candidates = [
+		process.env.MCC_PHP_PARSER,
+		path.join( __dirname, '..', 'node_modules', 'php-parser', 'src', 'index.js' ),
+		path.join( os.tmpdir(), 'php-lint', 'node_modules', 'php-parser', 'src', 'index.js' ),
+		'C:/Users/nyakovlev/AppData/Local/Temp/php-lint/package/src/index.js',
+	].filter( Boolean );
 
-const engine = require( PARSER_PATH );
+	for ( const candidate of candidates ) {
+		if ( fs.existsSync( candidate ) ) {
+			return candidate;
+		}
+	}
+
+	console.error( 'Не найден php-parser. Установите его: npm install php-parser' );
+	console.error( 'или укажите путь в MCC_PHP_PARSER.' );
+	process.exit( 2 );
+}
+
+const engine = require( resolveParser() );
 const parser = new engine( {
 	parser: { extractDoc: false, php7: true, suppressErrors: false },
 	ast: { withPositions: true },
