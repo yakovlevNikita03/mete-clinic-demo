@@ -3,7 +3,7 @@
  * Plugin Name: MÉTE CLINIC — Content
  * Plugin URI:  https://mete-clinic.local/
  * Description: Услуги, специалисты и настройки сайта MÉTE CLINIC. Данные хранятся в WordPress и не зависят от активной темы.
- * Version:     1.3.1
+ * Version:     1.3.2
  * Requires at least: 6.0
  * Requires PHP: 7.4
  * Author:      MÉTE CLINIC
@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! defined( 'MCC_VERSION' ) ) {
-	define( 'MCC_VERSION', '1.3.1' );
+	define( 'MCC_VERSION', '1.3.2' );
 }
 
 if ( ! defined( 'MCC_FILE' ) ) {
@@ -45,6 +45,7 @@ require_once MCC_DIR . 'includes/class-mcc-price-io.php';
 require_once MCC_DIR . 'includes/class-mcc-dashboard.php';
 require_once MCC_DIR . 'includes/class-mcc-settings.php';
 require_once MCC_DIR . 'includes/class-mcc-admin-list.php';
+require_once MCC_DIR . 'includes/class-mcc-admin-text.php';
 require_once MCC_DIR . 'includes/class-mcc-admin-assets.php';
 require_once MCC_DIR . 'includes/class-mcc-links.php';
 require_once MCC_DIR . 'includes/class-mcc-content.php';
@@ -69,6 +70,7 @@ function mcc_boot() {
 	MCC_Dashboard::init();
 	MCC_Settings::init();
 	MCC_Admin_List::init();
+	MCC_Admin_Text::init();
 	MCC_Admin_Assets::init();
 	MCC_Links::init();
 	MCC_Price_IO::init();

@@ -185,8 +185,19 @@ class MCC_Term_Fields {
 	public static function columns( $columns ) {
 		$new = array();
 
+		/*
+		 * Подписи столбцов приходят из ядра; на сайте с английской локалью
+		 * клиент видел бы Name, Description, Slug и Count.
+		 */
+		$titles = array(
+			'name'        => __( 'Название', 'mete-clinic-content' ),
+			'description' => __( 'Описание', 'mete-clinic-content' ),
+			'slug'        => __( 'Слаг', 'mete-clinic-content' ),
+			'posts'       => __( 'Услуг', 'mete-clinic-content' ),
+		);
+
 		foreach ( $columns as $key => $label ) {
-			$new[ $key ] = $label;
+			$new[ $key ] = isset( $titles[ $key ] ) ? $titles[ $key ] : $label;
 
 			if ( 'name' === $key ) {
 				$new['mcc_order'] = __( 'Порядок', 'mete-clinic-content' );

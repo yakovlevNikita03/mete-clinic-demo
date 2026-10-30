@@ -452,6 +452,47 @@
   color: #b32d2e;
 }
 
+/* Быстрое редактирование: дата, пароль и «Личное» клиенту не нужны */
+
+.post-type-mete_service .inline-edit-col-left .inline-edit-date,
+.post-type-mete_specialist .inline-edit-col-left .inline-edit-date,
+.post-type-mete_service .inline-edit-col-left .inline-edit-group,
+.post-type-mete_specialist .inline-edit-col-left .inline-edit-group {
+  display: none;
+}
+
+/* Свои поля быстрого редактирования: подпись в одну строку, поле рядом */
+
+.inline-edit-row .mcc-quick label.inline-edit-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+}
+
+.inline-edit-row .mcc-quick label.inline-edit-group > .title {
+  width: 13em;
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+.inline-edit-row .mcc-quick label.inline-edit-group > input,
+.inline-edit-row .mcc-quick label.inline-edit-group > select {
+  width: auto;
+  flex: 1 1 140px;
+  max-width: 240px;
+}
+
+.inline-edit-row .mcc-quick label.mcc-quick__check {
+  flex-wrap: nowrap;
+  gap: 6px;
+}
+
+.inline-edit-row .mcc-quick label.mcc-quick__check > input {
+  flex: 0 0 auto;
+  width: auto;
+}
+
 /* Списки услуг и специалистов */
 
 .edit-tags-php .wp-list-table .column-name {
