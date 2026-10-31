@@ -3,7 +3,7 @@
  * Plugin Name: MÉTE CLINIC — Content
  * Plugin URI:  https://mete-clinic.local/
  * Description: Услуги, специалисты и настройки сайта MÉTE CLINIC. Данные хранятся в WordPress и не зависят от активной темы.
- * Version:     1.3.2
+ * Version:     1.4.0
  * Requires at least: 6.0
  * Requires PHP: 7.4
  * Author:      MÉTE CLINIC
@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! defined( 'MCC_VERSION' ) ) {
-	define( 'MCC_VERSION', '1.3.2' );
+	define( 'MCC_VERSION', '1.4.0' );
 }
 
 if ( ! defined( 'MCC_FILE' ) ) {

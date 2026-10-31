@@ -4,14 +4,15 @@
  *
  * Как пользоваться:
  *
- * 1. Загрузите ТРИ файла в корень WordPress (рядом с wp-load.php):
+ * 1. Загрузите ЧЕТЫРЕ файла в корень WordPress (рядом с wp-load.php):
  *      run-checks.php
  *      service-checks.php
  *      price-checks.php
+ *      home-checks.php
  * 2. Войдите в админку под администратором.
  * 3. Откройте https://ваш-сайт/run-checks.php
  * 4. Скопируйте или сохраните вывод (Ctrl+A, Ctrl+C).
- * 5. УДАЛИТЕ все три файла с сервера.
+ * 5. УДАЛИТЕ все четыре файла с сервера.
  *
  * Скрипт работает только для вошедшего администратора. Он создаёт временную
  * категорию, услуги и специалиста и удаляет их в конце.
@@ -45,7 +46,13 @@ define( 'MCC_CHECKS_COMBINED', true );
 require $mcc_root . '/service-checks.php';
 require $mcc_root . '/price-checks.php';
 
-if ( (int) $GLOBALS['mete_check_failures'] > 0 ) {
+if ( file_exists( $mcc_root . '/home-checks.php' ) ) {
+	require $mcc_root . '/home-checks.php';
+}
+
+$mcc_failures = (int) $GLOBALS['mete_check_failures'] + (int) ( isset( $GLOBALS['mete_home_check_failures'] ) ? $GLOBALS['mete_home_check_failures'] : 0 );
+
+if ( $mcc_failures > 0 ) {
 	status_header( 500 );
 	exit( 1 );
 }

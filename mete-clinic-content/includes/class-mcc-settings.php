@@ -35,6 +35,31 @@ class MCC_Settings {
 	const TOOLS = 'mcc-tools';
 
 	/**
+	 * Maximum number of home page direction cards.
+	 */
+	const DIRECTIONS_LIMIT = 12;
+
+	/**
+	 * Maximum number of home page category rows.
+	 */
+	const CATEGORIES_LIMIT = 24;
+
+	/**
+	 * Built-in illustrations for the direction cards.
+	 *
+	 * @return array
+	 */
+	public static function direction_icons() {
+		return array(
+			'laser'     => __( 'Лазер', 'mete-clinic-content' ),
+			'face'      => __( 'Лицо', 'mete-clinic-content' ),
+			'body'      => __( 'Тело', 'mete-clinic-content' ),
+			'injection' => __( 'Инъекции', 'mete-clinic-content' ),
+			'none'      => __( 'Без иллюстрации', 'mete-clinic-content' ),
+		);
+	}
+
+	/**
 	 * Hooks.
 	 *
 	 * @return void
@@ -69,6 +94,53 @@ class MCC_Settings {
 			'reviews_embed_url'   => '',
 			'reviews_url'         => '',
 			'reviews_widget_html' => '',
+			'home_directions'     => array(
+				array(
+					'title'    => 'Лазерная эпиляция',
+					'text'     => 'Женские и мужские зоны, комплексы и отдельные участки.',
+					'image_id' => 0,
+					'icon'     => 'laser',
+				),
+				array(
+					'title'    => 'Аппаратная косметология',
+					'text'     => 'Омоложение лица, коррекция фигуры и ЛПЖ-массаж на современном оборудовании.',
+					'image_id' => 0,
+					'icon'     => 'face',
+				),
+				array(
+					'title'    => 'Инъекционная косметология',
+					'text'     => 'Контурная пластика, ботулинотерапия, мезотерапия и другие процедуры.',
+					'image_id' => 0,
+					'icon'     => 'injection',
+				),
+			),
+			'home_categories'     => array(
+				array(
+					'term_id' => 0,
+					'slug'    => 'konsultaciya',
+					'label'   => '',
+				),
+				array(
+					'term_id' => 0,
+					'slug'    => 'epilyaciya-zhenskie-kompleksy',
+					'label'   => '',
+				),
+				array(
+					'term_id' => 0,
+					'slug'    => 'apparatnaya-korrekciya-figury',
+					'label'   => '',
+				),
+				array(
+					'term_id' => 0,
+					'slug'    => 'apparatnoe-omolozhenie-lica',
+					'label'   => '',
+				),
+				array(
+					'term_id' => 0,
+					'slug'    => 'kosmetologiya-chistki-i-pilingi',
+					'label'   => '',
+				),
+			),
 		);
 	}
 
@@ -191,6 +263,7 @@ class MCC_Settings {
 	 */
 	private static function tabs() {
 		return array(
+			'home'     => __( 'Главная', 'mete-clinic-content' ),
 			'contacts' => __( 'Контакты', 'mete-clinic-content' ),
 			'booking'  => __( 'Запись и мессенджеры', 'mete-clinic-content' ),
 			'map'      => __( 'Карта', 'mete-clinic-content' ),
@@ -223,7 +296,7 @@ class MCC_Settings {
 			<?php endif; ?>
 
 			<p class="mcc-settings__intro">
-				<?php esc_html_e( 'Контакты, ссылка записи, карта и блок отзывов. Услуги и специалисты редактируются в отдельных разделах меню.', 'mete-clinic-content' ); ?>
+				<?php esc_html_e( 'Главная страница, контакты, ссылка записи, карта и блок отзывов. Услуги и специалисты редактируются в отдельных разделах меню.', 'mete-clinic-content' ); ?>
 			</p>
 
 			<nav class="nav-tab-wrapper mcc-tabs" aria-label="<?php esc_attr_e( 'Разделы настроек', 'mete-clinic-content' ); ?>">
@@ -238,6 +311,76 @@ class MCC_Settings {
 
 			<form method="post" action="<?php echo esc_url( admin_url( 'options.php' ) ); ?>">
 				<?php settings_fields( self::GROUP ); ?>
+
+				<div class="mcc-panel" data-mcc-panel="home"<?php echo 'home' === $active ? '' : ' hidden'; ?>>
+					<h2 class="title"><?php esc_html_e( 'Карточки направлений', 'mete-clinic-content' ); ?></h2>
+					<p class="mcc-settings__note">
+						<?php esc_html_e( 'Не кликабельные карточки в блоке «Основные направления». Порядок на сайте — как здесь. Карточка без заголовка не выводится.', 'mete-clinic-content' ); ?>
+					</p>
+
+					<input type="hidden" name="<?php echo esc_attr( self::OPTION . '[home_directions_present]' ); ?>" value="1">
+
+					<div class="mcc-repeater" data-mcc-repeater="home_directions" data-mcc-repeater-limit="<?php echo esc_attr( (string) self::DIRECTIONS_LIMIT ); ?>">
+						<div class="mcc-repeater__rows" data-mcc-repeater-rows>
+							<?php
+							foreach ( self::home_directions() as $index => $item ) {
+								self::direction_row( (int) $index, $item );
+							}
+							?>
+						</div>
+
+						<p class="mcc-repeater__foot">
+							<button type="button" class="button button-primary" data-mcc-repeater-add><?php esc_html_e( 'Добавить карточку', 'mete-clinic-content' ); ?></button>
+							<span class="mcc-repeater__hint" data-mcc-repeater-hint hidden>
+								<?php
+								printf(
+									/* translators: %s: maximum number of cards. */
+									esc_html__( 'Достигнут предел: %s карточек.', 'mete-clinic-content' ),
+									esc_html( number_format_i18n( self::DIRECTIONS_LIMIT ) )
+								);
+								?>
+							</span>
+						</p>
+
+						<template data-mcc-repeater-template>
+							<?php self::direction_row( 0, self::empty_direction(), true ); ?>
+						</template>
+					</div>
+
+					<h2 class="title"><?php esc_html_e( 'Категории на главной', 'mete-clinic-content' ); ?></h2>
+					<p class="mcc-settings__note">
+						<?php esc_html_e( 'Кликабельный список под направлениями. Ведёт в каталог с выбранной категорией. Категории без услуг на сайте пропускаются.', 'mete-clinic-content' ); ?>
+					</p>
+
+					<input type="hidden" name="<?php echo esc_attr( self::OPTION . '[home_categories_present]' ); ?>" value="1">
+
+					<div class="mcc-repeater" data-mcc-repeater="home_categories" data-mcc-repeater-limit="<?php echo esc_attr( (string) self::CATEGORIES_LIMIT ); ?>">
+						<div class="mcc-repeater__rows" data-mcc-repeater-rows>
+							<?php
+							foreach ( self::home_categories() as $index => $item ) {
+								self::category_row( (int) $index, $item );
+							}
+							?>
+						</div>
+
+						<p class="mcc-repeater__foot">
+							<button type="button" class="button button-primary" data-mcc-repeater-add><?php esc_html_e( 'Добавить категорию', 'mete-clinic-content' ); ?></button>
+							<span class="mcc-repeater__hint" data-mcc-repeater-hint hidden>
+								<?php
+								printf(
+									/* translators: %s: maximum number of categories. */
+									esc_html__( 'Достигнут предел: %s категорий.', 'mete-clinic-content' ),
+									esc_html( number_format_i18n( self::CATEGORIES_LIMIT ) )
+								);
+								?>
+							</span>
+						</p>
+
+						<template data-mcc-repeater-template>
+							<?php self::category_row( 0, self::empty_category(), true ); ?>
+						</template>
+					</div>
+				</div>
 
 				<div class="mcc-panel" data-mcc-panel="contacts"<?php echo 'contacts' === $active ? '' : ' hidden'; ?>>
 					<h2 class="title"><?php esc_html_e( 'Контакты', 'mete-clinic-content' ); ?></h2>
@@ -483,6 +626,350 @@ class MCC_Settings {
 	}
 
 	/**
+	 * Saved direction cards with their defaults applied.
+	 *
+	 * @return array
+	 */
+	private static function home_directions() {
+		$settings = self::get();
+		$rows     = isset( $settings['home_directions'] ) && is_array( $settings['home_directions'] )
+			? array_values( $settings['home_directions'] )
+			: array();
+
+		$items = array();
+
+		foreach ( $rows as $row ) {
+			if ( ! is_array( $row ) ) {
+				continue;
+			}
+
+			$title = isset( $row['title'] ) ? (string) $row['title'] : '';
+			$icon  = isset( $row['icon'] ) ? (string) $row['icon'] : 'none';
+
+			$items[] = array(
+				'title'    => $title,
+				'text'     => isset( $row['text'] ) ? (string) $row['text'] : '',
+				'image_id' => isset( $row['image_id'] ) ? (int) $row['image_id'] : 0,
+				'icon'     => array_key_exists( $icon, self::direction_icons() ) ? $icon : 'none',
+			);
+		}
+
+		if ( empty( $items ) ) {
+			return array();
+		}
+
+		return array_slice( $items, 0, self::DIRECTIONS_LIMIT );
+	}
+
+	/**
+	 * Saved category rows with the term id resolved.
+	 *
+	 * @return array
+	 */
+	private static function home_categories() {
+		$settings = self::get();
+		$rows     = isset( $settings['home_categories'] ) && is_array( $settings['home_categories'] )
+			? array_values( $settings['home_categories'] )
+			: array();
+
+		$items = array();
+
+		foreach ( $rows as $row ) {
+			if ( ! is_array( $row ) ) {
+				continue;
+			}
+
+			$term = MCC_Content::resolve_home_category( $row );
+
+			$items[] = array(
+				'term_id' => $term instanceof WP_Term ? (int) $term->term_id : 0,
+				'slug'    => isset( $row['slug'] ) ? (string) $row['slug'] : '',
+				'label'   => isset( $row['label'] ) ? (string) $row['label'] : '',
+			);
+		}
+
+		return array_slice( $items, 0, self::CATEGORIES_LIMIT );
+	}
+
+	/**
+	 * Empty direction row.
+	 *
+	 * @return array
+	 */
+	private static function empty_direction() {
+		return array(
+			'title'    => '',
+			'text'     => '',
+			'image_id' => 0,
+			'icon'     => 'none',
+		);
+	}
+
+	/**
+	 * Empty category row.
+	 *
+	 * @return array
+	 */
+	private static function empty_category() {
+		return array(
+			'term_id' => 0,
+			'slug'    => '',
+			'label'   => '',
+		);
+	}
+
+	/**
+	 * One direction card row.
+	 *
+	 * @param int   $index       Row index.
+	 * @param array $item        Row values.
+	 * @param bool  $is_template Whether this is the JS template.
+	 * @return void
+	 */
+	private static function direction_row( $index, $item, $is_template = false ) {
+		$slot  = $is_template ? '__index__' : (string) (int) $index;
+		$name  = self::OPTION . '[home_directions][' . $slot . ']';
+
+		/*
+		 * data-mcc-name — шаблон с плейсхолдером: по нему JS заново собирает
+		 * name после добавления, удаления и перемещения строк. Если хранить
+		 * там реальный индекс, порядок в форме разойдётся с порядком на сайте.
+		 */
+		$data = self::OPTION . '[home_directions][__index__]';
+		$title = isset( $item['title'] ) ? (string) $item['title'] : '';
+		$text  = isset( $item['text'] ) ? (string) $item['text'] : '';
+		$icon  = isset( $item['icon'] ) ? (string) $item['icon'] : 'none';
+		$id    = isset( $item['image_id'] ) ? (int) $item['image_id'] : 0;
+		?>
+		<div class="mcc-repeat-item" data-mcc-repeat-item>
+			<div class="mcc-repeat-item__head">
+				<span class="mcc-repeat-item__number" data-mcc-repeat-number aria-hidden="true"><?php echo esc_html( (string) ( (int) $index + 1 ) ); ?></span>
+				<div class="mcc-repeat-item__actions">
+					<button type="button" class="button-link" data-mcc-repeat-up aria-label="<?php esc_attr_e( 'Переместить карточку выше', 'mete-clinic-content' ); ?>"><?php esc_html_e( 'Выше', 'mete-clinic-content' ); ?></button>
+					<button type="button" class="button-link" data-mcc-repeat-down aria-label="<?php esc_attr_e( 'Переместить карточку ниже', 'mete-clinic-content' ); ?>"><?php esc_html_e( 'Ниже', 'mete-clinic-content' ); ?></button>
+					<button type="button" class="button-link button-link-delete" data-mcc-repeat-remove aria-label="<?php esc_attr_e( 'Удалить карточку', 'mete-clinic-content' ); ?>"><?php esc_html_e( 'Удалить', 'mete-clinic-content' ); ?></button>
+				</div>
+			</div>
+
+			<p class="mcc-repeat-field">
+				<label for="mcc-direction-<?php echo esc_attr( $slot ); ?>-title"><?php esc_html_e( 'Заголовок', 'mete-clinic-content' ); ?></label>
+				<input
+					type="text"
+					id="mcc-direction-<?php echo esc_attr( $slot ); ?>-title"
+					class="regular-text"
+					maxlength="80"
+					name="<?php echo esc_attr( $name . '[title]' ); ?>"
+					data-mcc-name="<?php echo esc_attr( $data . '[title]' ); ?>"
+					value="<?php echo esc_attr( $title ); ?>"
+					data-mcc-repeat-title
+				>
+			</p>
+
+			<p class="mcc-repeat-field mcc-repeat-field--wide">
+				<label for="mcc-direction-<?php echo esc_attr( $slot ); ?>-text"><?php esc_html_e( 'Описание', 'mete-clinic-content' ); ?></label>
+				<textarea
+					id="mcc-direction-<?php echo esc_attr( $slot ); ?>-text"
+					rows="2"
+					maxlength="240"
+					name="<?php echo esc_attr( $name . '[text]' ); ?>"
+					data-mcc-name="<?php echo esc_attr( $data . '[text]' ); ?>"
+				><?php echo esc_textarea( $text ); ?></textarea>
+			</p>
+
+			<div class="mcc-repeat-field mcc-repeat-field--wide">
+				<span class="mcc-repeat-field__label"><?php esc_html_e( 'Изображение', 'mete-clinic-content' ); ?></span>
+				<?php self::image_control( $name . '[image_id]', $id, $data . '[image_id]' ); ?>
+			</div>
+
+			<p class="mcc-repeat-field">
+				<label for="mcc-direction-<?php echo esc_attr( $slot ); ?>-icon"><?php esc_html_e( 'Иллюстрация, если нет изображения', 'mete-clinic-content' ); ?></label>
+				<select
+					id="mcc-direction-<?php echo esc_attr( $slot ); ?>-icon"
+					name="<?php echo esc_attr( $name . '[icon]' ); ?>"
+					data-mcc-name="<?php echo esc_attr( $data . '[icon]' ); ?>"
+				>
+					<?php foreach ( self::direction_icons() as $value => $label ) : ?>
+						<option value="<?php echo esc_attr( $value ); ?>" <?php selected( $icon, $value ); ?>><?php echo esc_html( $label ); ?></option>
+					<?php endforeach; ?>
+				</select>
+			</p>
+		</div>
+		<?php
+	}
+
+	/**
+	 * One category row.
+	 *
+	 * @param int   $index       Row index.
+	 * @param array $item        Row values.
+	 * @param bool  $is_template Whether this is the JS template.
+	 * @return void
+	 */
+	private static function category_row( $index, $item, $is_template = false ) {
+		$slot    = $is_template ? '__index__' : (string) (int) $index;
+		$name    = self::OPTION . '[home_categories][' . $slot . ']';
+		$data    = self::OPTION . '[home_categories][__index__]';
+		$term_id = isset( $item['term_id'] ) ? (int) $item['term_id'] : 0;
+		$slug    = isset( $item['slug'] ) ? (string) $item['slug'] : '';
+		$label   = isset( $item['label'] ) ? (string) $item['label'] : '';
+		$options = self::category_options();
+		?>
+		<div class="mcc-repeat-item mcc-repeat-item--category" data-mcc-repeat-item>
+			<div class="mcc-repeat-item__head">
+				<span class="mcc-repeat-item__number" data-mcc-repeat-number aria-hidden="true"><?php echo esc_html( (string) ( (int) $index + 1 ) ); ?></span>
+				<div class="mcc-repeat-item__actions">
+					<button type="button" class="button-link" data-mcc-repeat-up aria-label="<?php esc_attr_e( 'Переместить категорию выше', 'mete-clinic-content' ); ?>"><?php esc_html_e( 'Выше', 'mete-clinic-content' ); ?></button>
+					<button type="button" class="button-link" data-mcc-repeat-down aria-label="<?php esc_attr_e( 'Переместить категорию ниже', 'mete-clinic-content' ); ?>"><?php esc_html_e( 'Ниже', 'mete-clinic-content' ); ?></button>
+					<button type="button" class="button-link button-link-delete" data-mcc-repeat-remove aria-label="<?php esc_attr_e( 'Удалить категорию', 'mete-clinic-content' ); ?>"><?php esc_html_e( 'Удалить', 'mete-clinic-content' ); ?></button>
+				</div>
+			</div>
+
+			<p class="mcc-repeat-field mcc-repeat-field--wide">
+				<label for="mcc-category-<?php echo esc_attr( $slot ); ?>-term"><?php esc_html_e( 'Категория', 'mete-clinic-content' ); ?></label>
+				<select
+					id="mcc-category-<?php echo esc_attr( $slot ); ?>-term"
+					name="<?php echo esc_attr( $name . '[term_id]' ); ?>"
+					data-mcc-name="<?php echo esc_attr( $data . '[term_id]' ); ?>"
+				>
+					<option value="0"><?php esc_html_e( '— выберите категорию —', 'mete-clinic-content' ); ?></option>
+					<?php foreach ( $options as $option ) : ?>
+						<option value="<?php echo esc_attr( (string) $option['id'] ); ?>" <?php selected( $term_id, (int) $option['id'] ); ?>><?php echo esc_html( $option['label'] ); ?></option>
+					<?php endforeach; ?>
+				</select>
+			</p>
+
+			<p class="mcc-repeat-field">
+				<label for="mcc-category-<?php echo esc_attr( $slot ); ?>-label"><?php esc_html_e( 'Подпись на сайте', 'mete-clinic-content' ); ?></label>
+				<input
+					type="text"
+					id="mcc-category-<?php echo esc_attr( $slot ); ?>-label"
+					class="regular-text"
+					maxlength="80"
+					name="<?php echo esc_attr( $name . '[label]' ); ?>"
+					data-mcc-name="<?php echo esc_attr( $data . '[label]' ); ?>"
+					value="<?php echo esc_attr( $label ); ?>"
+					placeholder="<?php esc_attr_e( 'как в названии категории', 'mete-clinic-content' ); ?>"
+				>
+				<input type="hidden" name="<?php echo esc_attr( $name . '[slug]' ); ?>" data-mcc-name="<?php echo esc_attr( $data . '[slug]' ); ?>" value="<?php echo esc_attr( $slug ); ?>">
+			</p>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Image picker used by the direction cards.
+	 *
+	 * @param string $name     Field name.
+	 * @param int    $image_id Attachment ID.
+	 * @param string $data     Name template for the JS renumbering.
+	 * @return void
+	 */
+	private static function image_control( $name, $image_id, $data = '' ) {
+		$image_id = (int) $image_id;
+		$url      = $image_id > 0 ? wp_get_attachment_image_url( $image_id, 'medium' ) : '';
+		$url      = $url ? (string) $url : '';
+
+		if ( '' === $data ) {
+			$data = $name;
+		}
+		?>
+		<div class="mcc-repeat-media" data-mcc-media data-mcc-media-title="<?php esc_attr_e( 'Изображение карточки', 'mete-clinic-content' ); ?>">
+			<input type="hidden" name="<?php echo esc_attr( $name ); ?>" value="<?php echo esc_attr( (string) $image_id ); ?>" data-mcc-media-input data-mcc-name="<?php echo esc_attr( $data ); ?>">
+			<img
+				class="mcc-repeat-media__preview"
+				data-mcc-media-preview
+				<?php echo '' !== $url ? 'src="' . esc_url( $url ) . '"' : ''; ?>
+				alt=""
+				width="120"
+				height="90"
+				<?php echo '' !== $url ? '' : ' hidden'; ?>
+			>
+			<p class="mcc-repeat-media__actions">
+				<button type="button" class="button" data-mcc-media-select><?php esc_html_e( 'Выбрать', 'mete-clinic-content' ); ?></button>
+				<button type="button" class="button-link" data-mcc-media-remove<?php echo '' !== $url ? '' : ' hidden'; ?>><?php esc_html_e( 'Убрать', 'mete-clinic-content' ); ?></button>
+			</p>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Flat list of service categories with depth indentation.
+	 *
+	 * @return array
+	 */
+	private static function category_options() {
+		$terms = get_terms(
+			array(
+				'taxonomy'   => MCC_Post_Types::TAX,
+				'hide_empty' => false,
+			)
+		);
+
+		if ( is_wp_error( $terms ) || ! is_array( $terms ) ) {
+			return array();
+		}
+
+		$by_parent = array();
+		$known     = array();
+
+		foreach ( $terms as $term ) {
+			$by_parent[ (int) $term->parent ][] = $term;
+			$known[ (int) $term->term_id ]      = true;
+		}
+
+		$items = array();
+		$walk  = null;
+
+		$walk = function ( $parent, $depth ) use ( &$walk, &$by_parent, &$items ) {
+			if ( empty( $by_parent[ $parent ] ) ) {
+				return;
+			}
+
+			$children = $by_parent[ $parent ];
+			usort(
+				$children,
+				function ( $a, $b ) {
+					return strcasecmp( (string) $a->name, (string) $b->name );
+				}
+			);
+
+			foreach ( $children as $term ) {
+				$count = (int) $term->count;
+				$label = str_repeat( '— ', (int) $depth ) . (string) $term->name . ' (' . number_format_i18n( $count ) . ')';
+
+				if ( 0 === $count ) {
+					$label .= ' — ' . __( 'нет услуг, на сайте скрыта', 'mete-clinic-content' );
+				}
+
+				$items[] = array(
+					'id'    => (int) $term->term_id,
+					'label' => $label,
+				);
+
+				$walk( (int) $term->term_id, (int) $depth + 1 );
+			}
+		};
+
+		$walk( 0, 0 );
+
+		// Категории с потерянным родителем тоже должны быть доступны.
+		foreach ( $terms as $term ) {
+			$parent = (int) $term->parent;
+
+			if ( 0 === $parent || isset( $known[ $parent ] ) ) {
+				continue;
+			}
+
+			$items[] = array(
+				'id'    => (int) $term->term_id,
+				'label' => (string) $term->name . ' (' . number_format_i18n( (int) $term->count ) . ')',
+			);
+		}
+
+		return $items;
+	}
+
+	/**
 	 * Text or URL input row.
 	 *
 	 * @param string $key         Setting key.
@@ -608,7 +1095,146 @@ class MCC_Settings {
 			$clean['phone_tel'] = self::phone_digits( $clean['phone'] );
 		}
 
+		$clean['home_directions'] = self::sanitize_directions( $input );
+		$clean['home_categories'] = self::sanitize_categories( $input );
+
 		return wp_parse_args( $clean, self::defaults() );
+	}
+
+	/**
+	 * Sanitize the direction cards.
+	 *
+	 * Пустой список должен сохраняться пустым, поэтому форма отправляет маркер
+	 * «present»: без него и без самих строк значение остаётся прежним.
+	 *
+	 * @param array $input Submitted values.
+	 * @return array
+	 */
+	private static function sanitize_directions( $input ) {
+		$limit = self::DIRECTIONS_LIMIT;
+
+		if ( ! array_key_exists( 'home_directions', $input ) ) {
+			if ( ! empty( $input['home_directions_present'] ) ) {
+				return array();
+			}
+
+			$current = self::get();
+			$rows    = isset( $current['home_directions'] ) && is_array( $current['home_directions'] )
+				? array_values( $current['home_directions'] )
+				: array();
+
+			return array_slice( $rows, 0, $limit );
+		}
+
+		$rows  = is_array( $input['home_directions'] ) ? $input['home_directions'] : array();
+		$icons = array_keys( self::direction_icons() );
+		$clean = array();
+
+		foreach ( $rows as $row ) {
+			if ( ! is_array( $row ) ) {
+				continue;
+			}
+
+			$title = isset( $row['title'] )
+				? trim( mb_substr( sanitize_text_field( wp_unslash( (string) $row['title'] ) ), 0, 80 ) )
+				: '';
+
+			if ( '' === $title ) {
+				continue;
+			}
+
+			$text = isset( $row['text'] )
+				? trim( mb_substr( sanitize_textarea_field( wp_unslash( (string) $row['text'] ) ), 0, 240 ) )
+				: '';
+
+			$image_id = isset( $row['image_id'] ) ? absint( $row['image_id'] ) : 0;
+
+			if ( $image_id > 0 && ! wp_attachment_is_image( $image_id ) ) {
+				$image_id = 0;
+			}
+
+			$icon = isset( $row['icon'] ) ? sanitize_key( wp_unslash( (string) $row['icon'] ) ) : 'none';
+
+			if ( ! in_array( $icon, $icons, true ) ) {
+				$icon = 'none';
+			}
+
+			$clean[] = array(
+				'title'    => $title,
+				'text'     => $text,
+				'image_id' => (int) $image_id,
+				'icon'     => $icon,
+			);
+
+			if ( count( $clean ) >= $limit ) {
+				break;
+			}
+		}
+
+		return array_values( $clean );
+	}
+
+	/**
+	 * Sanitize the home page category list.
+	 *
+	 * @param array $input Submitted values.
+	 * @return array
+	 */
+	private static function sanitize_categories( $input ) {
+		$limit = self::CATEGORIES_LIMIT;
+
+		if ( ! array_key_exists( 'home_categories', $input ) ) {
+			if ( ! empty( $input['home_categories_present'] ) ) {
+				return array();
+			}
+
+			$current = self::get();
+			$rows    = isset( $current['home_categories'] ) && is_array( $current['home_categories'] )
+				? array_values( $current['home_categories'] )
+				: array();
+
+			return array_slice( $rows, 0, $limit );
+		}
+
+		$rows  = is_array( $input['home_categories'] ) ? $input['home_categories'] : array();
+		$clean = array();
+		$seen  = array();
+
+		foreach ( $rows as $row ) {
+			if ( ! is_array( $row ) ) {
+				continue;
+			}
+
+			$term = MCC_Content::resolve_home_category( $row );
+
+			if ( ! $term instanceof WP_Term ) {
+				continue;
+			}
+
+			$term_id = (int) $term->term_id;
+
+			if ( isset( $seen[ $term_id ] ) ) {
+				continue;
+			}
+
+			$seen[ $term_id ] = true;
+
+			$label = isset( $row['label'] )
+				? trim( mb_substr( sanitize_text_field( wp_unslash( (string) $row['label'] ) ), 0, 80 ) )
+				: '';
+
+			$clean[] = array(
+				'term_id' => $term_id,
+				'slug'    => (string) $term->slug,
+				'label'   => $label,
+			);
+
+			if ( count( $clean ) >= $limit ) {
+				break;
+			}
+		}
+
+		return array_values( $clean );
 	}
 
 	/**

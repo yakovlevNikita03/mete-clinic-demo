@@ -21,7 +21,7 @@ $mete_has_photos = false;
 ?>
 <section class="section" id="team" aria-labelledby="team-title">
 	<div class="container">
-		<div class="section__head">
+		<div class="section__head reveal">
 			<div>
 				<p class="eyebrow"><?php esc_html_e( 'Команда профессионалов', 'mete-clinic' ); ?></p>
 				<h2 class="section__title" id="team-title"><?php esc_html_e( 'Наши специалисты', 'mete-clinic' ); ?></h2>

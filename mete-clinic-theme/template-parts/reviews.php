@@ -26,7 +26,7 @@ if ( '' === $mete_text ) {
 ?>
 <section class="section section--tight" id="reviews" aria-labelledby="reviews-title">
 	<div class="container reviews">
-		<div class="reviews__copy">
+		<div class="reviews__copy reveal">
 			<p class="eyebrow"><?php esc_html_e( 'Отзывы', 'mete-clinic' ); ?></p>
 			<h2 class="section__title" id="reviews-title"><?php echo esc_html( $mete_title ); ?></h2>
 			<p class="reviews__text"><?php echo esc_html( $mete_text ); ?></p>
@@ -45,7 +45,7 @@ if ( '' === $mete_text ) {
 			<?php endif; ?>
 		</div>
 
-		<div class="reviews__widget">
+		<div class="reviews__widget reveal">
 			<?php if ( mete_is_http_url( $mete_embed ) ) : ?>
 				<iframe
 					src="<?php echo esc_url( $mete_embed ); ?>"

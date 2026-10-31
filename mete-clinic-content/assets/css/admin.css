@@ -578,3 +578,133 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Вкладка «Главная»: карточки направлений и список категорий */
+
+.mcc-repeater {
+  max-width: 760px;
+  margin-bottom: 30px;
+}
+
+.mcc-repeater__rows {
+  display: grid;
+  gap: 12px;
+}
+
+.mcc-repeat-item {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 16px;
+  padding: 14px 16px 16px;
+  border: 1px solid #dcdcde;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.mcc-repeat-item__head {
+  display: flex;
+  grid-column: 1 / -1;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #f0f0f1;
+}
+
+.mcc-repeat-item__number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #f0f0f1;
+  font-size: 12px;
+  font-weight: 600;
+  color: #50575e;
+}
+
+.mcc-repeat-item__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+}
+
+.mcc-repeat-field {
+  min-width: 0;
+  margin: 0;
+}
+
+.mcc-repeat-field--wide {
+  grid-column: 1 / -1;
+}
+
+.mcc-repeat-field label,
+.mcc-repeat-field__label {
+  display: block;
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+.mcc-repeat-field input[type="text"],
+.mcc-repeat-field select,
+.mcc-repeat-field textarea {
+  width: 100%;
+  max-width: none;
+}
+
+.mcc-repeat-item--category {
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+}
+
+.mcc-repeat-item--category .mcc-repeat-field--wide {
+  grid-column: 1 / 2;
+}
+
+.mcc-repeat-media {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 16px;
+}
+
+.mcc-repeat-media__preview {
+  width: 120px;
+  height: 90px;
+  border: 1px solid #dcdcde;
+  border-radius: 6px;
+  background: #f6f7f7;
+  object-fit: cover;
+}
+
+.mcc-repeat-media__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+}
+
+.mcc-repeater__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  margin: 12px 0 0;
+}
+
+.mcc-repeater__hint {
+  font-size: 12px;
+  color: #646970;
+}
+
+@media screen and (max-width: 782px) {
+  .mcc-repeat-item,
+  .mcc-repeat-item--category {
+    grid-template-columns: 1fr;
+  }
+
+  .mcc-repeat-field--wide,
+  .mcc-repeat-item--category .mcc-repeat-field--wide {
+    grid-column: 1 / -1;
+  }
+}

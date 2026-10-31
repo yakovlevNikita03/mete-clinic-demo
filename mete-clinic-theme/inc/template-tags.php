@@ -459,6 +459,36 @@ function mete_service_categories( $args = array() ) {
 }
 
 /**
+ * Direction cards for the home page.
+ *
+ * @return array
+ */
+function mete_home_directions() {
+	if ( function_exists( 'mete_content_get_home_directions' ) ) {
+		$items = mete_content_get_home_directions();
+
+		return is_array( $items ) ? $items : array();
+	}
+
+	return array();
+}
+
+/**
+ * Category links for the home page list.
+ *
+ * @return array
+ */
+function mete_home_categories() {
+	if ( function_exists( 'mete_content_get_home_categories' ) ) {
+		$items = mete_content_get_home_categories();
+
+		return is_array( $items ) ? $items : array();
+	}
+
+	return array();
+}
+
+/**
  * Categories for the catalog filter, including nested ones.
  *
  * @return WP_Term[]
@@ -639,6 +669,70 @@ function mete_category_image_url( $term ) {
 	}
 
 	return '';
+}
+
+/**
+ * Illustration for a direction card.
+ *
+ * Порядок: загруженное изображение, затем встроенная иллюстрация по ключу,
+ * затем пустая строка (карточка покажет бежевую подложку).
+ *
+ * @param array $item Direction item from the plugin.
+ * @return string
+ */
+function mete_direction_image_url( $item ) {
+	$image_id = isset( $item['image_id'] ) ? (int) $item['image_id'] : 0;
+
+	if ( $image_id > 0 ) {
+		$url = wp_get_attachment_image_url( $image_id, 'mete-card' );
+
+		if ( $url ) {
+			return $url;
+		}
+	}
+
+	$map = array(
+		'laser'     => 'images/service-laser.svg',
+		'face'      => 'images/service-face.svg',
+		'body'      => 'images/service-body.svg',
+		'injection' => 'images/service-injection.svg',
+	);
+
+	$icon = isset( $item['icon'] ) ? (string) $item['icon'] : '';
+
+	if ( isset( $map[ $icon ] ) ) {
+		return mete_asset_url( $map[ $icon ] );
+	}
+
+	return '';
+}
+
+/**
+ * "5 услуг" with the right Russian plural form.
+ *
+ * В русском три формы, а _n() умеет только две, поэтому форма выбирается
+ * здесь; строки всё равно проходят через перевод.
+ *
+ * @param int $count Number of services.
+ * @return string
+ */
+function mete_service_count_text( $count ) {
+	$count  = absint( $count );
+	$mod10  = $count % 10;
+	$mod100 = $count % 100;
+
+	if ( 1 === $mod10 && 11 !== $mod100 ) {
+		/* translators: %s: number of services. */
+		$text = __( '%s услуга', 'mete-clinic' );
+	} elseif ( $mod10 >= 2 && $mod10 <= 4 && ( $mod100 < 12 || $mod100 > 14 ) ) {
+		/* translators: %s: number of services. */
+		$text = __( '%s услуги', 'mete-clinic' );
+	} else {
+		/* translators: %s: number of services. */
+		$text = __( '%s услуг', 'mete-clinic' );
+	}
+
+	return sprintf( $text, number_format_i18n( $count ) );
 }
 
 /**

@@ -223,6 +223,120 @@ class MCC_Content {
 	}
 
 	/**
+	 * Direction cards for the home page.
+	 *
+	 * Плагин не знает путей темы, поэтому отдаёт идентификатор изображения
+	 * и ключ встроенной иллюстрации; URL собирает тема.
+	 *
+	 * @return array
+	 */
+	public static function get_home_directions() {
+		$settings = self::get_settings();
+		$rows     = isset( $settings['home_directions'] ) && is_array( $settings['home_directions'] )
+			? $settings['home_directions']
+			: array();
+
+		$icons = array( 'laser', 'face', 'body', 'injection', 'none' );
+		$items = array();
+
+		foreach ( $rows as $row ) {
+			if ( ! is_array( $row ) ) {
+				continue;
+			}
+
+			$title = isset( $row['title'] ) ? trim( (string) $row['title'] ) : '';
+
+			if ( '' === $title ) {
+				continue;
+			}
+
+			$icon = isset( $row['icon'] ) ? (string) $row['icon'] : 'none';
+
+			$items[] = array(
+				'title'    => $title,
+				'text'     => isset( $row['text'] ) ? trim( (string) $row['text'] ) : '',
+				'image_id' => isset( $row['image_id'] ) ? (int) $row['image_id'] : 0,
+				'icon'     => in_array( $icon, $icons, true ) ? $icon : 'none',
+			);
+		}
+
+		return $items;
+	}
+
+	/**
+	 * Category links for the home page list.
+	 *
+	 * Категории без опубликованных услуг пропускаются: ссылка на пустой
+	 * каталог выглядит ошибкой.
+	 *
+	 * @return array
+	 */
+	public static function get_home_categories() {
+		$settings = self::get_settings();
+		$rows     = isset( $settings['home_categories'] ) && is_array( $settings['home_categories'] )
+			? $settings['home_categories']
+			: array();
+
+		$items = array();
+
+		foreach ( $rows as $row ) {
+			$term = self::resolve_home_category( $row );
+
+			if ( ! $term instanceof WP_Term ) {
+				continue;
+			}
+
+			$count = (int) $term->count;
+
+			if ( $count < 1 ) {
+				continue;
+			}
+
+			$label = isset( $row['label'] ) ? trim( (string) $row['label'] ) : '';
+
+			$items[] = array(
+				'term'  => $term,
+				'label' => '' !== $label ? $label : (string) $term->name,
+				'count' => $count,
+			);
+		}
+
+		return $items;
+	}
+
+	/**
+	 * Find the category behind a saved home page row.
+	 *
+	 * @param array $row Saved row (term_id, slug).
+	 * @return WP_Term|null
+	 */
+	public static function resolve_home_category( $row ) {
+		if ( ! is_array( $row ) ) {
+			return null;
+		}
+
+		$term_id = isset( $row['term_id'] ) ? absint( $row['term_id'] ) : 0;
+
+		if ( $term_id > 0 ) {
+			$term = get_term( $term_id, MCC_Post_Types::TAX );
+
+			if ( $term instanceof WP_Term ) {
+				return $term;
+			}
+		}
+
+		$slug = isset( $row['slug'] ) ? sanitize_title( (string) $row['slug'] ) : '';
+
+		if ( '' === $slug ) {
+			return null;
+		}
+
+		$term = get_term_by( 'slug', $slug, MCC_Post_Types::TAX );
+
+		return $term instanceof WP_Term ? $term : null;
+	}
+
+	/**
 	 * Price label for a service.
 	 *
 	 * @param int $post_id Service ID.
@@ -501,6 +615,34 @@ function mete_content_get_service_filters() {
  */
 function mete_content_get_service_categories_for( $post_id ) {
 	return MCC_Content::get_service_categories_for( (int) $post_id );
+}
+
+/**
+ * Direction cards for the home page.
+ *
+ * @return array
+ */
+function mete_content_get_home_directions() {
+	return MCC_Content::get_home_directions();
+}
+
+/**
+ * Category links for the home page list.
+ *
+ * @return array
+ */
+function mete_content_get_home_categories() {
+	return MCC_Content::get_home_categories();
+}
+
+/**
+ * Find the category behind a saved home page row.
+ *
+ * @param array $row Saved row.
+ * @return WP_Term|null
+ */
+function mete_content_resolve_home_category( $row ) {
+	return MCC_Content::resolve_home_category( $row );
 }
 
 /**

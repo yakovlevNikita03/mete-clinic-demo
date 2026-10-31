@@ -20,7 +20,7 @@ if ( ! $mete_popular->have_posts() ) {
 <section class="section section--tight" id="prices" aria-labelledby="prices-title">
 	<div class="container">
 		<div class="price-panel">
-			<div class="price-panel__head">
+			<div class="price-panel__head reveal">
 				<div>
 					<p class="eyebrow"><?php esc_html_e( 'Популярные услуги', 'mete-clinic' ); ?></p>
 					<h2 class="section__title" id="prices-title"><?php esc_html_e( 'Прайс — ключевые позиции', 'mete-clinic' ); ?></h2>
@@ -47,7 +47,7 @@ if ( ! $mete_popular->have_posts() ) {
 					$mete_duration = mete_duration_text( $mete_id );
 					$mete_excerpt  = trim( wp_strip_all_tags( get_the_excerpt() ) );
 					?>
-					<li class="price-row">
+					<li class="price-row reveal">
 						<a class="price-row__name" href="<?php the_permalink(); ?>">
 							<?php the_title(); ?>
 							<?php if ( '' !== $mete_excerpt ) : ?>

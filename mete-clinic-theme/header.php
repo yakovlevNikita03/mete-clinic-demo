@@ -83,7 +83,7 @@ $mete_booking  = mete_booking_url();
 			);
 			?>
 
-			<button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="<?php esc_attr_e( 'Открыть меню', 'mete-clinic' ); ?>" data-menu-toggle>
+			<button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="<?php esc_attr_e( 'Открыть меню', 'mete-clinic' ); ?>" data-label-close="<?php esc_attr_e( 'Закрыть меню', 'mete-clinic' ); ?>" data-menu-toggle>
 				<span class="menu-toggle__line"></span>
 				<span class="menu-toggle__line"></span>
 				<span class="menu-toggle__line"></span>

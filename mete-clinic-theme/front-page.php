@@ -11,6 +11,7 @@ get_header();
 	<?php
 	get_template_part( 'template-parts/hero' );
 	get_template_part( 'template-parts/service-categories' );
+	get_template_part( 'template-parts/home-categories' );
 	get_template_part( 'template-parts/popular-services' );
 	get_template_part( 'template-parts/specialists' );
 	get_template_part( 'template-parts/reviews' );

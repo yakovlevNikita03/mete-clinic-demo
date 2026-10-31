@@ -209,15 +209,29 @@
     }
   }
 
-  Array.prototype.forEach.call(document.querySelectorAll("[data-mcc-media-select]"), function (button) {
-    button.addEventListener("click", function (event) {
+  /*
+   * Кнопки выбора изображения привязаны к документу: строки повторителя
+   * на вкладке «Главная» создаются динамически, поэтому прямой
+   * querySelectorAll по загруженной странице их бы не нашёл.
+   */
+  document.addEventListener("click", function (event) {
+    var target = event.target;
+
+    if (!target || !target.closest) {
+      return;
+    }
+
+    var select = target.closest("[data-mcc-media-select]");
+    var remove = target.closest("[data-mcc-media-remove]");
+
+    if (select) {
       event.preventDefault();
 
       if (!window.wp || !window.wp.media) {
         return;
       }
 
-      var wrap = closestWrap(button);
+      var wrap = closestWrap(select);
 
       if (!wrap) {
         return;
@@ -225,8 +239,6 @@
 
       if (!mediaFrames.frame) {
         mediaFrames.frame = window.wp.media({
-          title: config.mediaTitle || "Изображение",
-          button: { text: config.mediaButton || "Использовать изображение" },
           multiple: false,
           library: { type: "image" }
         });
@@ -239,31 +251,221 @@
             return;
           }
 
-          var target = mediaFrames.target;
+          var current = mediaFrames.target;
           var size = attachment.sizes && attachment.sizes.medium ? attachment.sizes.medium : null;
           var url = size ? size.url : attachment.url;
 
-          if (target && target.isConnected) {
-            setImage(target, attachment.id, url);
+          if (current && current.isConnected) {
+            setImage(current, attachment.id, url);
           }
         });
       }
 
+      mediaFrames.frame.options.title =
+        wrap.getAttribute("data-mcc-media-title") || config.mediaTitle || "Изображение";
+      mediaFrames.frame.options.button = {
+        text: config.mediaButton || "Использовать изображение"
+      };
+
       mediaFrames.target = wrap;
       mediaFrames.frame.open();
-    });
-  });
 
-  Array.prototype.forEach.call(document.querySelectorAll("[data-mcc-media-remove]"), function (button) {
-    button.addEventListener("click", function (event) {
+      return;
+    }
+
+    if (remove) {
       event.preventDefault();
 
-      var wrap = closestWrap(button);
+      var removeWrap = closestWrap(remove);
 
-      if (wrap) {
-        setImage(wrap, "", "");
+      if (removeWrap) {
+        setImage(removeWrap, "", "");
+      }
+    }
+  });
+
+  /* Повторители на вкладке «Главная» -------------------------------------- */
+
+  Array.prototype.forEach.call(document.querySelectorAll("[data-mcc-repeater]"), function (repeater) {
+    var rows = repeater.querySelector("[data-mcc-repeater-rows]");
+    var template = repeater.querySelector("[data-mcc-repeater-template]");
+    var add = repeater.querySelector("[data-mcc-repeater-add]");
+    var hint = repeater.querySelector("[data-mcc-repeater-hint]");
+    var rawLimit = parseInt(repeater.getAttribute("data-mcc-repeater-limit"), 10);
+    var limit = isNaN(rawLimit) ? 0 : rawLimit;
+    var noun = repeater.getAttribute("data-mcc-repeater") === "home_categories" ? "категорию" : "карточку";
+    var repeaterKey = repeater.getAttribute("data-mcc-repeater") || "";
+
+    if (config.repeater && config.repeater[repeaterKey]) {
+      noun = config.repeater[repeaterKey];
+    }
+
+    if (!rows) {
+      return;
+    }
+
+    function items() {
+      return Array.prototype.slice.call(rows.querySelectorAll("[data-mcc-repeat-item]"));
+    }
+
+    function setLabels(item) {
+      var titleField = item.querySelector("[data-mcc-repeat-title]");
+      var title = titleField ? titleField.value.trim() : "";
+      var quote = title ? " «" + title + "»" : "";
+      var up = item.querySelector("[data-mcc-repeat-up]");
+      var down = item.querySelector("[data-mcc-repeat-down]");
+      var remove = item.querySelector("[data-mcc-repeat-remove]");
+
+      if (up) {
+        up.setAttribute("aria-label", "Переместить " + noun + quote + " выше");
+      }
+
+      if (down) {
+        down.setAttribute("aria-label", "Переместить " + noun + quote + " ниже");
+      }
+
+      if (remove) {
+        remove.setAttribute("aria-label", "Удалить " + noun + quote);
+      }
+    }
+
+    function renumber() {
+      var list = items();
+
+      list.forEach(function (item, index) {
+        Array.prototype.forEach.call(item.querySelectorAll("[data-mcc-name]"), function (field) {
+          var base = field.getAttribute("data-mcc-name");
+
+          if (base) {
+            field.name = base.replace("__index__", String(index));
+          }
+        });
+
+        Array.prototype.forEach.call(item.querySelectorAll("[id]"), function (node) {
+          node.id = node.id.replace(/-(__index__|\d+)-/, "-" + index + "-");
+        });
+
+        var number = item.querySelector("[data-mcc-repeat-number]");
+
+        if (number) {
+          number.textContent = String(index + 1);
+        }
+
+        setLabels(item);
+      });
+
+      var full = limit > 0 && list.length >= limit;
+
+      if (add) {
+        add.disabled = full;
+      }
+
+      if (hint) {
+        hint.hidden = !full;
+      }
+    }
+
+    if (add && template && template.content) {
+      add.addEventListener("click", function () {
+        if (limit > 0 && items().length >= limit) {
+          return;
+        }
+
+        rows.appendChild(template.content.cloneNode(true));
+        renumber();
+
+        var list = items();
+        var item = list[list.length - 1];
+
+        if (!item) {
+          return;
+        }
+
+        var first = item.querySelector("[data-mcc-repeat-title], select, input");
+
+        if (first) {
+          first.focus();
+        }
+      });
+    }
+
+    repeater.addEventListener("click", function (event) {
+      var target = event.target;
+
+      if (!target || !target.closest) {
+        return;
+      }
+
+      var item = target.closest("[data-mcc-repeat-item]");
+
+      if (!item || !rows.contains(item)) {
+        return;
+      }
+
+      if (target.closest("[data-mcc-repeat-up]")) {
+        event.preventDefault();
+
+        var previous = item.previousElementSibling;
+
+        if (previous) {
+          rows.insertBefore(item, previous);
+          renumber();
+        }
+
+        var up = item.querySelector("[data-mcc-repeat-up]");
+
+        if (up) {
+          up.focus();
+        }
+
+        return;
+      }
+
+      if (target.closest("[data-mcc-repeat-down]")) {
+        event.preventDefault();
+
+        var next = item.nextElementSibling;
+
+        if (next) {
+          rows.insertBefore(next, item);
+          renumber();
+        }
+
+        var down = item.querySelector("[data-mcc-repeat-down]");
+
+        if (down) {
+          down.focus();
+        }
+
+        return;
+      }
+
+      if (target.closest("[data-mcc-repeat-remove]")) {
+        event.preventDefault();
+        item.remove();
+        renumber();
+
+        if (add) {
+          add.focus();
+        }
       }
     });
+
+    repeater.addEventListener("input", function (event) {
+      var field = event.target;
+
+      if (!field || !field.matches || !field.matches("[data-mcc-repeat-title]")) {
+        return;
+      }
+
+      var item = field.closest("[data-mcc-repeat-item]");
+
+      if (item) {
+        setLabels(item);
+      }
+    });
+
+    renumber();
   });
 
   /* Сброс формы «Добавить категорию» -------------------------------------- */

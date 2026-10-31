@@ -24,6 +24,25 @@
 
   var menuToggle = document.querySelector("[data-menu-toggle]");
   var menu = document.querySelector("[data-menu]");
+  var menuTimer = null;
+
+  // Подписи берём из шаблона: они переводятся в PHP.
+  var menuLabelOpen = menuToggle ? menuToggle.getAttribute("aria-label") || "" : "";
+  var menuLabelClose = menuToggle ? menuToggle.getAttribute("data-label-close") || menuLabelOpen : "";
+
+  function finishMenuClose() {
+    if (!menu) {
+      return;
+    }
+
+    if (menuTimer) {
+      window.clearTimeout(menuTimer);
+      menuTimer = null;
+    }
+
+    menu.classList.remove("is-closing");
+    menu.hidden = true;
+  }
 
   function setMenu(open, returnFocus) {
     if (!menu || !menuToggle) {
@@ -31,21 +50,54 @@
     }
 
     menuToggle.setAttribute("aria-expanded", open ? "true" : "false");
-    menuToggle.setAttribute(
-      "aria-label",
-      open ? menuToggle.getAttribute("data-label-close") || "Закрыть меню" : menuToggle.getAttribute("data-label-open") || "Открыть меню"
-    );
-    menu.hidden = !open;
+
+    if (menuLabelOpen || menuLabelClose) {
+      menuToggle.setAttribute("aria-label", open ? menuLabelClose : menuLabelOpen);
+    }
     document.body.classList.toggle("is-menu-open", open);
 
-    if (!open && returnFocus) {
+    if (menuTimer) {
+      window.clearTimeout(menuTimer);
+      menuTimer = null;
+    }
+
+    if (open) {
+      menu.hidden = false;
+      menu.classList.remove("is-closing");
+      return;
+    }
+
+    if (returnFocus) {
       menuToggle.focus();
     }
+
+    // Закрываем только видимое меню: повторный клик во время анимации
+    // не должен запускать её заново.
+    if (menu.hidden || menu.classList.contains("is-closing")) {
+      return;
+    }
+
+    menu.classList.add("is-closing");
+
+    var onEnd = function (event) {
+      if (event && event.target !== menu) {
+        return;
+      }
+
+      menu.removeEventListener("animationend", onEnd);
+      finishMenuClose();
+    };
+
+    menu.addEventListener("animationend", onEnd);
+
+    // Страховка: у анимации может не быть события (reduced motion),
+    // но меню обязано закрыться.
+    menuTimer = window.setTimeout(finishMenuClose, 300);
   }
 
   if (menu && menuToggle) {
     menuToggle.addEventListener("click", function () {
-      setMenu(menu.hidden, false);
+      setMenu(menu.hidden || menu.classList.contains("is-closing"), false);
     });
 
     menu.addEventListener("click", function (event) {
@@ -55,11 +107,7 @@
     });
 
     document.addEventListener("click", function (event) {
-      if (menu.hidden) {
-        return;
-      }
-
-      if (header && header.contains(event.target)) {
+      if (menu.hidden || header && header.contains(event.target)) {
         return;
       }
 
@@ -86,48 +134,59 @@
     }
   }
 
-  /* Service directions: show all ----------------------------------------- */
-
-  var servicesToggle = document.querySelector("[data-services-toggle]");
-  var servicesGrid = document.getElementById("services-grid");
-
-  if (servicesToggle && servicesGrid) {
-    var extraCards = Array.prototype.slice.call(
-      servicesGrid.querySelectorAll(".service-card--extra")
-    );
-    var noMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    servicesToggle.addEventListener("click", function (event) {
-      event.preventDefault();
-
-      var expanded = servicesToggle.getAttribute("aria-expanded") === "true";
-
-      extraCards.forEach(function (card) {
-        card.hidden = expanded;
-
-        if (!expanded) {
-          card.classList.add("is-visible");
-        }
-      });
-
-      servicesToggle.setAttribute("aria-expanded", expanded ? "false" : "true");
-      servicesToggle.textContent = expanded
-        ? servicesToggle.getAttribute("data-label-more")
-        : servicesToggle.getAttribute("data-label-less");
-
-      if (expanded) {
-        var top =
-          servicesGrid.getBoundingClientRect().top + window.scrollY - 88;
-
-        window.scrollTo({ top: top, behavior: noMotion ? "auto" : "smooth" });
-      }
-    });
-  }
-
   /* Reveal on scroll ----------------------------------------------------- */
 
   var revealEls = Array.prototype.slice.call(document.querySelectorAll(".reveal"));
   var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // Совпадает с --dur-slow в style.css.
+  var REVEAL_DURATION = 800;
+  var REVEAL_STEP = 70;
+  var REVEAL_MAX_STEPS = 5;
+
+  function finishReveal(node) {
+    node.classList.add("is-revealed");
+    node.style.removeProperty("--reveal-delay");
+    node.style.willChange = "";
+  }
+
+  function showReveal(node, delay) {
+    if (node.classList.contains("is-revealed")) {
+      return;
+    }
+
+    node.style.setProperty("--reveal-delay", delay + "ms");
+    node.style.willChange = "opacity, transform";
+    node.classList.add("is-visible");
+
+    /*
+     * Пока элемент не получил .is-revealed, на нём действует переход
+     * появления (и он перебивает hover-переходы компонента). После
+     * завершения класс снимает это правило, и дальше работают обычные
+     * transition самого элемента — уже без задержки.
+     */
+    window.setTimeout(function () {
+      finishReveal(node);
+    }, REVEAL_DURATION + delay + 120);
+  }
+
+  function compareDocumentOrder(a, b) {
+    if (a === b) {
+      return 0;
+    }
+
+    var position = a.compareDocumentPosition(b);
+
+    if (position & Node.DOCUMENT_POSITION_FOLLOWING) {
+      return -1;
+    }
+
+    if (position & Node.DOCUMENT_POSITION_PRECEDING) {
+      return 1;
+    }
+
+    return 0;
+  }
 
   if (!revealEls.length) {
     return;
@@ -136,20 +195,48 @@
   if (!("IntersectionObserver" in window) || reducedMotion) {
     revealEls.forEach(function (node) {
       node.classList.add("is-visible");
+      finishReveal(node);
     });
     return;
   }
 
   var observer = new IntersectionObserver(
     function (entries) {
+      var groups = [];
+
       entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("is-visible");
-          observer.unobserve(entry.target);
+        if (!entry.isIntersecting) {
+          return;
         }
+
+        observer.unobserve(entry.target);
+
+        var parent = entry.target.parentNode;
+        var group = null;
+
+        groups.forEach(function (candidate) {
+          if (candidate.parent === parent) {
+            group = candidate;
+          }
+        });
+
+        if (!group) {
+          group = { parent: parent, nodes: [] };
+          groups.push(group);
+        }
+
+        group.nodes.push(entry.target);
+      });
+
+      // Элементы, попавшие в экран одной пачкой, появляются лесенкой.
+      groups.forEach(function (group) {
+        group.nodes.sort(compareDocumentOrder);
+        group.nodes.forEach(function (node, index) {
+          showReveal(node, Math.min(index, REVEAL_MAX_STEPS) * REVEAL_STEP);
+        });
       });
     },
-    { threshold: 0.12, rootMargin: "0px 0px -6% 0px" }
+    { threshold: 0.15, rootMargin: "0px 0px -8% 0px" }
   );
 
   revealEls.forEach(function (node) {
@@ -159,7 +246,12 @@
   // Страховка: контент не должен остаться невидимым при сбое наблюдателя.
   window.setTimeout(function () {
     revealEls.forEach(function (node) {
+      if (node.classList.contains("is-revealed")) {
+        return;
+      }
+
       node.classList.add("is-visible");
+      finishReveal(node);
     });
   }, 2500);
 })();

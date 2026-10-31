@@ -60,7 +60,7 @@ if ( '' !== $mete_max ) {
 ?>
 <section class="section contacts" id="contacts" aria-labelledby="contacts-title">
 	<div class="container">
-		<div class="section__head">
+		<div class="section__head reveal">
 			<div>
 				<p class="eyebrow"><?php esc_html_e( 'Контакты', 'mete-clinic' ); ?></p>
 				<h2 class="section__title" id="contacts-title"><?php esc_html_e( 'Как нас найти', 'mete-clinic' ); ?></h2>
@@ -68,7 +68,7 @@ if ( '' !== $mete_max ) {
 		</div>
 
 		<div class="contacts__grid<?php echo $mete_map_ok ? '' : ' contacts__grid--single'; ?>">
-			<div class="contact-card">
+			<div class="contact-card reveal">
 				<p class="contact-card__lead"><?php esc_html_e( 'Запишитесь удобным способом — онлайн, по телефону или в мессенджере.', 'mete-clinic' ); ?></p>
 
 				<?php if ( ! empty( $mete_rows ) ) : ?>
@@ -132,7 +132,7 @@ if ( '' !== $mete_max ) {
 			</div>
 
 			<?php if ( $mete_map_ok ) : ?>
-				<div class="map-card">
+				<div class="map-card reveal">
 					<div class="map-frame">
 						<iframe
 							src="<?php echo esc_url( $mete_map_embed ); ?>"

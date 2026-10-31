@@ -53,7 +53,7 @@ class MCC_Admin_Assets {
 
 		wp_enqueue_script( self::HANDLE, MCC_URL . 'assets/js/admin.js', $deps, MCC_VERSION, true );
 
-		if ( MCC_Post_Types::TAX === (string) $screen->taxonomy ) {
+		if ( MCC_Post_Types::TAX === (string) $screen->taxonomy || self::is_settings_page() ) {
 			wp_enqueue_media();
 		}
 
@@ -88,6 +88,22 @@ class MCC_Admin_Assets {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Whether the current screen is the plugin settings page.
+	 *
+	 * Нужен, чтобы подключить медиатеку для выбора изображения карточки
+	 * направления на вкладке «Главная».
+	 *
+	 * @return bool
+	 */
+	private static function is_settings_page() {
+		if ( ! isset( $_GET['page'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			return false;
+		}
+
+		return MCC_Settings::PAGE === sanitize_key( wp_unslash( $_GET['page'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 	}
 
 	/**
@@ -137,6 +153,10 @@ class MCC_Admin_Assets {
 			),
 			'mediaTitle'  => __( 'Изображение категории', 'mete-clinic-content' ),
 			'mediaButton' => __( 'Использовать изображение', 'mete-clinic-content' ),
+			'repeater'    => array(
+				'home_directions' => __( 'карточку', 'mete-clinic-content' ),
+				'home_categories' => __( 'категорию', 'mete-clinic-content' ),
+			),
 			'strings'     => array(
 				'checking'     => __( 'Проверяем…', 'mete-clinic-content' ),
 				'emptyUrl'     => __( 'Сначала заполните ссылку.', 'mete-clinic-content' ),
