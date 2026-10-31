@@ -39,18 +39,21 @@
     menuEndHandler = null;
   }
 
-  function finishMenuClose() {
-    if (!menu) {
-      return;
-    }
-
+  function clearMenuClose() {
     clearMenuEnd();
 
     if (menuTimer) {
       window.clearTimeout(menuTimer);
       menuTimer = null;
     }
+  }
 
+  function finishMenuClose() {
+    if (!menu) {
+      return;
+    }
+
+    clearMenuClose();
     menu.classList.remove("is-closing");
     menu.hidden = true;
   }
@@ -67,16 +70,10 @@
     }
     document.body.classList.toggle("is-menu-open", open);
 
-    if (menuTimer) {
-      window.clearTimeout(menuTimer);
-      menuTimer = null;
-    }
-
-    // Обработчик закрытия мог остаться от прерванной анимации: без снятия
-    // его animationend спрячет уже открытое меню.
-    clearMenuEnd();
-
     if (open) {
+      // Обработчик закрытия мог остаться от прерванной анимации: без снятия
+      // его animationend спрячет уже открытое меню.
+      clearMenuClose();
       menu.hidden = false;
       menu.classList.remove("is-closing");
       return;
@@ -86,12 +83,13 @@
       menuToggle.focus();
     }
 
-    // Закрываем только видимое меню: повторный клик во время анимации
-    // не должен запускать её заново.
+    // Закрытие уже идёт (или меню скрыто): его доведут до конца текущие
+    // обработчик animationend и таймер-страховка, снимать их нельзя.
     if (menu.hidden || menu.classList.contains("is-closing")) {
       return;
     }
 
+    clearMenuClose();
     menu.classList.add("is-closing");
 
     menuEndHandler = function (event) {
@@ -99,7 +97,6 @@
         return;
       }
 
-      clearMenuEnd();
       finishMenuClose();
     };
 

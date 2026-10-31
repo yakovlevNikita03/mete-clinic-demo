@@ -881,6 +881,29 @@ body.is-menu-open {
   .services-grid--count-many {
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   }
+
+  /* Одна карточка не должна растягиваться на весь контейнер: иначе
+     картинка 4:3 получается выше первого экрана. */
+  .services-grid--count-1 {
+    max-width: 880px;
+  }
+
+  .services-grid--count-1 .service-card {
+    flex-direction: row;
+    align-items: stretch;
+  }
+
+  .services-grid--count-1 .service-card__media {
+    width: 44%;
+    flex: none;
+    min-height: 240px;
+    aspect-ratio: auto;
+  }
+
+  .services-grid--count-1 .service-card__body {
+    justify-content: center;
+    padding: 28px;
+  }
 }
 
 @media (min-width: 700px) {
@@ -908,29 +931,6 @@ body.is-menu-open {
   .services-grid--count-5 > .services-grid__item:last-child .service-card__media {
     width: auto;
     aspect-ratio: 4 / 3;
-  }
-
-  /* Одна карточка не должна растягиваться на весь контейнер: иначе
-     картинка 4:3 получается выше первого экрана. */
-  .services-grid--count-1 {
-    max-width: 880px;
-  }
-
-  .services-grid--count-1 .service-card {
-    flex-direction: row;
-    align-items: stretch;
-  }
-
-  .services-grid--count-1 .service-card__media {
-    width: 44%;
-    flex: none;
-    min-height: 240px;
-    aspect-ratio: auto;
-  }
-
-  .services-grid--count-1 .service-card__body {
-    justify-content: center;
-    padding: 28px;
   }
 }
 
