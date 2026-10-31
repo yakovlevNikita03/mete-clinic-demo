@@ -29,7 +29,7 @@ if ( empty( $mete_categories ) ) {
 		</div>
 
 		<div class="category-panel">
-			<ul class="category-list" role="list">
+			<ul class="category-list" role="list" data-reveal-group>
 				<?php foreach ( $mete_categories as $mete_index => $mete_item ) : ?>
 					<li class="category-list__item">
 						<a class="category-list__link reveal" href="<?php echo esc_url( mete_category_link( $mete_item['term'] ) ); ?>">

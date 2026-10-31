@@ -31,7 +31,7 @@ $mete_modifier = $mete_count >= 7 ? 'services-grid--count-many' : 'services-grid
 			</div>
 		</div>
 
-		<ul class="services-grid <?php echo esc_attr( $mete_modifier ); ?>" role="list">
+		<ul class="services-grid <?php echo esc_attr( $mete_modifier ); ?>" role="list" data-reveal-group>
 			<?php foreach ( $mete_directions as $mete_item ) : ?>
 				<?php $mete_image = mete_direction_image_url( $mete_item ); ?>
 				<li class="services-grid__item">

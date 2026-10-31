@@ -431,6 +431,7 @@ try {
 	mete_home_check_assert( 'Нет кнопки «Показать все направления»', false === strpos( $html, 'data-services-toggle' ) );
 	mete_home_check_assert( 'Нет остатков старой разметки', false === strpos( $html, 'service-card__arrow' ) );
 	mete_home_check_assert( 'Класс сетки учитывает количество карточек', false !== strpos( $html, 'services-grid--count-3' ) );
+	mete_home_check_assert( 'В сетке направлений есть data-reveal-group', false !== strpos( $html, 'data-reveal-group' ) );
 
 	$eyebrow_position = mb_strpos( $html, 'Наши услуги' );
 	$title_position   = mb_strpos( $html, 'Основные направления' );
@@ -456,6 +457,7 @@ try {
 	mete_home_check_assert( 'Есть кнопка полного каталога', false !== strpos( $html, esc_url( mete_catalog_url() ) ) );
 	mete_home_check_assert( 'Выводится количество услуг', false !== mb_strpos( $html, 'услуг' ) );
 	mete_home_check_assert( 'Нумерация начинается с 01', false !== strpos( $html, '>01<' ) );
+	mete_home_check_assert( 'В списке категорий есть data-reveal-group', false !== strpos( $html, 'data-reveal-group' ) );
 
 	mete_home_check_set( array( 'home_categories' => array() ) );
 	mete_home_check_assert( 'Без категорий блок не выводится', '' === trim( mete_home_check_render( 'home-categories' ) ) );

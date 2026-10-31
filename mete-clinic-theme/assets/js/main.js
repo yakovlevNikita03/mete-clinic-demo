@@ -25,15 +25,26 @@
   var menuToggle = document.querySelector("[data-menu-toggle]");
   var menu = document.querySelector("[data-menu]");
   var menuTimer = null;
+  var menuEndHandler = null;
 
   // Подписи берём из шаблона: они переводятся в PHP.
   var menuLabelOpen = menuToggle ? menuToggle.getAttribute("aria-label") || "" : "";
   var menuLabelClose = menuToggle ? menuToggle.getAttribute("data-label-close") || menuLabelOpen : "";
 
+  function clearMenuEnd() {
+    if (menuEndHandler && menu) {
+      menu.removeEventListener("animationend", menuEndHandler);
+    }
+
+    menuEndHandler = null;
+  }
+
   function finishMenuClose() {
     if (!menu) {
       return;
     }
+
+    clearMenuEnd();
 
     if (menuTimer) {
       window.clearTimeout(menuTimer);
@@ -61,6 +72,10 @@
       menuTimer = null;
     }
 
+    // Обработчик закрытия мог остаться от прерванной анимации: без снятия
+    // его animationend спрячет уже открытое меню.
+    clearMenuEnd();
+
     if (open) {
       menu.hidden = false;
       menu.classList.remove("is-closing");
@@ -79,16 +94,16 @@
 
     menu.classList.add("is-closing");
 
-    var onEnd = function (event) {
+    menuEndHandler = function (event) {
       if (event && event.target !== menu) {
         return;
       }
 
-      menu.removeEventListener("animationend", onEnd);
+      clearMenuEnd();
       finishMenuClose();
     };
 
-    menu.addEventListener("animationend", onEnd);
+    menu.addEventListener("animationend", menuEndHandler);
 
     // Страховка: у анимации может не быть события (reduced motion),
     // но меню обязано закрыться.
@@ -200,9 +215,13 @@
     return;
   }
 
+  var observerFired = false;
+
   var observer = new IntersectionObserver(
     function (entries) {
       var groups = [];
+
+      observerFired = true;
 
       entries.forEach(function (entry) {
         if (!entry.isIntersecting) {
@@ -211,7 +230,9 @@
 
         observer.unobserve(entry.target);
 
-        var parent = entry.target.parentNode;
+        // Карточки лежат в отдельных <li>, поэтому шаг лесенки считаем
+        // по общему списку, а не по непосредственному родителю.
+        var parent = entry.target.closest("[data-reveal-group]") || entry.target.parentNode;
         var group = null;
 
         groups.forEach(function (candidate) {
@@ -243,11 +264,23 @@
     observer.observe(node);
   });
 
-  // Страховка: контент не должен остаться невидимым при сбое наблюдателя.
+  /*
+   * Страховка: контент не должен остаться невидимым при сбое наблюдателя.
+   * Если наблюдатель работал, показываем только то, что уже попало на экран,
+   * иначе секции ниже первого экрана теряют анимацию появления.
+   */
   window.setTimeout(function () {
     revealEls.forEach(function (node) {
-      if (node.classList.contains("is-revealed")) {
+      if (node.classList.contains("is-revealed") || node.classList.contains("is-visible")) {
         return;
+      }
+
+      if (observerFired && node.getBoundingClientRect().top >= window.innerHeight) {
+        return;
+      }
+
+      if (observerFired) {
+        observer.unobserve(node);
       }
 
       node.classList.add("is-visible");

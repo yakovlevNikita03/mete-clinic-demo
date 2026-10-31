@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! defined( 'METE_THEME_VERSION' ) ) {
-	define( 'METE_THEME_VERSION', '1.3.0' );
+	define( 'METE_THEME_VERSION', '1.3.1' );
 }
 
 if ( ! defined( 'METE_THEME_DIR' ) ) {

@@ -4,7 +4,7 @@ Theme URI: https://mete-clinic.local/
 Author: MÉTE CLINIC
 Author URI: https://mete-clinic.local/
 Description: Фирменная тема клиники эпиляции и косметологии MÉTE CLINIC. Дизайн перенесён с утверждённого лендинга; услуги, специалисты и контакты выводятся из плагина MÉTE CLINIC — Content.
-Version: 1.3.0
+Version: 1.3.1
 Requires at least: 6.0
 Tested up to: 6.8
 Requires PHP: 7.4
@@ -909,6 +909,29 @@ body.is-menu-open {
     width: auto;
     aspect-ratio: 4 / 3;
   }
+
+  /* Одна карточка не должна растягиваться на весь контейнер: иначе
+     картинка 4:3 получается выше первого экрана. */
+  .services-grid--count-1 {
+    max-width: 880px;
+  }
+
+  .services-grid--count-1 .service-card {
+    flex-direction: row;
+    align-items: stretch;
+  }
+
+  .services-grid--count-1 .service-card__media {
+    width: 44%;
+    flex: none;
+    min-height: 240px;
+    aspect-ratio: auto;
+  }
+
+  .services-grid--count-1 .service-card__body {
+    justify-content: center;
+    padding: 28px;
+  }
 }
 
 @media (min-width: 1024px) {
@@ -978,9 +1001,16 @@ body.is-menu-open {
   transition: transform var(--dur) var(--ease-out);
 }
 
-.category-list__link:hover::before,
 .category-list__link:focus-visible::before {
   transform: scaleX(1);
+}
+
+/* Наведение — только там, где есть курсор: на тач-экранах hover
+   остаётся висеть после касания. */
+@media (hover: hover) {
+  .category-list__link:hover::before {
+    transform: scaleX(1);
+  }
 }
 
 .category-list__link:focus-visible {
@@ -1006,9 +1036,14 @@ body.is-menu-open {
   transition: transform var(--dur) var(--ease-out);
 }
 
-.category-list__link:hover .category-list__body,
 .category-list__link:focus-visible .category-list__body {
   transform: translateX(4px);
+}
+
+@media (hover: hover) {
+  .category-list__link:hover .category-list__body {
+    transform: translateX(4px);
+  }
 }
 
 .category-list__name {
@@ -1038,16 +1073,26 @@ body.is-menu-open {
   transition: transform var(--dur-fast) var(--ease-out);
 }
 
-.category-list__link:hover .category-list__arrow,
 .category-list__link:focus-visible .category-list__arrow {
   background: var(--color-primary);
   border-color: var(--color-primary);
   color: var(--color-white);
 }
 
-.category-list__link:hover .category-list__arrow svg,
 .category-list__link:focus-visible .category-list__arrow svg {
   transform: translateX(3px);
+}
+
+@media (hover: hover) {
+  .category-list__link:hover .category-list__arrow {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: var(--color-white);
+  }
+
+  .category-list__link:hover .category-list__arrow svg {
+    transform: translateX(3px);
+  }
 }
 
 .category-panel__foot {
